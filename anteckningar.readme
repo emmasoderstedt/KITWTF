@@ -1,0 +1,23 @@
+funktioner
+inloggning
+popup när man loggar in om det nära att tiden går ut
+
+“hör av räkningen” kopplas mellan användare men själva kommunikationen sker inte inom appen (man anmäker bara att man hört av sig)
+delar på nedräkning (om jag hör av mig till mormor nollställs hennes räkning och det räknas som att hon hört av sig till mig också, man har gemensam “nedräkning”) (ELLER INTE?)
+lista med familjemedlemar (markering)
+kolumn senast inloggad, senast hört av sig. 
+datum som jämför och ser hur länge sen man hörde av sig
+användaren väljer själv användarens alias och tiden som man har satt ut
+kontakter som inte är användare ska finnas med
+lägga till standard relative-typer (mormor, mamma, kusin typ)
+Lägga till i friends databasen -antal dagar man har på sig att höra av sig (ta in från användaren)
+
+övrigt doto
+databas
+klassbibliotek
+html gränssnitt
+användardokumentation
+teknisk dokumentation
+individuell rapport
+visuell knapp: skapa användare 
+men vi har förskapta användare
