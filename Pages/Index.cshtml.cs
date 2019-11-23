@@ -19,7 +19,7 @@ namespace KITWTF1.Pages
 
         public string nameTest { get; set; }
 
-        public  List<DBConnection> users = new List<DBConnection>();
+        public  List<DBTables> users = new List<DBTables>();
       
    
         public void OnGet()
@@ -35,8 +35,8 @@ namespace KITWTF1.Pages
                     string connectionString="server=40.85.84.155;Database=student8;User Id=student8;Password=YH-student@2019";
                     using (SqlConnection connection = new SqlConnection(connectionString))
                     {       
-                                     var query =   connection.Query<DBConnection>($"select id from users where userName = '{email}' and passWord= '{password}'");
-                                     users = new List<DBConnection>(query);
+                                     var query =   connection.Query<DBTables>($"select id from users where userName = '{email}' and passWord= '{password}'");
+                                     users = new List<DBTables>(query);
                                             id  = query.FirstOrDefault().id;                      
                                             if(id!=null)
                                             {

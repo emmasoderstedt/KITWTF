@@ -5,15 +5,21 @@
 }
 
 <div class="text-center">
+
     
+            <li>
+                <h1 class="display-5">"Välkommen: " @Model.userLogged</h1>
+             
+            </li>         
+
+
+</div>
+
+
     
 @Model.friend
 @foreach(var item in Model.friends)
 {
-    
-            <li>
-                <h1 class="display-5">"Välkommen: " @item.MyId</h1>
-            </li>
             <div class="text-left">           
             <li>      
                 "Släktingens namn: " @item.friendsId                
@@ -23,6 +29,6 @@
             </li>
             </div>
 }
-</div>
+
 
 

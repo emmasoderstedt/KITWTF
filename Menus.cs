@@ -1,6 +1,7 @@
 using System;
 using KITWTF1.Pages;
 using System.Collections.Generic;
+using System.Linq;
 namespace KITWTF1
 {
     public class Menus
@@ -16,7 +17,7 @@ namespace KITWTF1
                 Console.WriteLine("Välkommen till KITWTF!"+
                 "\n[1] Logga in"+
                 "\n[2] Skapa ny användare"+
-                "\n[2] Avsluta");
+                "\n[3] Avsluta");
                 Int32.TryParse(Console.ReadLine(), out int choice);
                 switch(choice)
                 {
@@ -75,7 +76,7 @@ namespace KITWTF1
             bool menuLoop = true;
             while(menuLoop){
             
-                Console.WriteLine("Välkommen! "+
+                Console.WriteLine("Välkommen! "+loggedIn.userLogged+
                 "\n[1] Visa släktingar: "+ 
                 "\n[2] Lägg till vän:" +
                 "\n[3] Gå tillbaka. ");
@@ -88,7 +89,7 @@ namespace KITWTF1
                             break;
                         
                         case 2:
-                            AddFriend();
+                            AddFriend(id);
                             break;
                         case 3:
                             IndexModel index = new IndexModel();
@@ -146,25 +147,64 @@ namespace KITWTF1
             return null;
            
         }
-        void AddFriend()
-        {    //TODO
+        void AddFriend(int id)
+        { 
             List<Account> users = new List<Account>();
-            IndexModel index = new IndexModel();
+            List<Relatives> relatives = new List<Relatives>();
+            
+            
             
             Account ac = new Account();
-            var lsu= ac.ShowUsers(ac,1);
-            users = new List<Account>(lsu);
+            users= ac.ShowUsers(ac,id).ToList();
+            Console.Clear();
             Console.WriteLine("Vem vill du lägga till:");
             foreach (var item in users)
             {
                 Console.WriteLine(item.userName);
             }
             string friend = Console.ReadLine();
+            DBTables dbt= new DBTables();
+            foreach (var item in users)
+            {
+                if(friend ==item.userName)
+                {
+                      dbt.friendsUserId = item.id;
+                      dbt.friendWoApp=" ";
+                      dbt.lastCommunication= DateTime.Now.ToString();
 
-
+                      dbt.myUserName = id;
+                     
+                      
+                     
+                
+                       break;
+                }
+            }
+            Relatives r = new Relatives();
+            relatives = r.ShowRelatives().ToList();
+            Console.Clear();
+            Console.WriteLine("Vilken relation har ni?");
+            
+            foreach (var item in relatives)
+            {
+                Console.WriteLine(item.type);
+            
+            }
+             string rel = Console.ReadLine();
+            foreach (var item in relatives)
+            {
+                 if(rel ==item.type)
+                 {
+                    dbt.RelativeId = item.id;
+                    dbt.AddFriend(dbt);
+                    break;
+                 }
+            }
+            
+            
         }
 
-        
+
 
     }
 }

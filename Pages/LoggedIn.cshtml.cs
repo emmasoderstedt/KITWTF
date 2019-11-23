@@ -14,24 +14,35 @@ namespace KITWTF1.Pages
     public class LoggedInModel : PageModel
     {
         public string friend { get; set; }
+        public string userLogged { get; set; }
 
-        public List <DBConnection> friends = new List<DBConnection>();
+        public List <DBTables> friends = new List<DBTables>();
+
         public IActionResult OnGet(int? id=null)
         {
+
+            try
+            {
                 string connectionString="server=40.85.84.155;Database=student8;User Id=student8;Password=YH-student@2019";
                  using (SqlConnection connection = new SqlConnection(connectionString))
                  {       
+                                     friends =   connection.Query<DBTables>($"EXEC showFamily @id ='{id}'").ToList();
 
-                                     var user =   connection.Query<DBConnection>($"EXEC showFamily @id ='{id}'");
-                                                  friends = new List<DBConnection>(user);  
-
-                                            if(user==null)
+                                     userLogged =   connection.Query<DBTables>($"EXEC showFamily @id ='{id}'").FirstOrDefault().MyId;
+ 
+                                            if(userLogged==null||friends==null)
                                             {
                                                      return Redirect("/Index?Error=fel"); 
                                             }                   
                                           return null;                     
                  }
-
+            }
+            catch (System.Exception)
+            {
+                
+               return Redirect("/Index?Error=fel"); 
+            }
+                
         }
     }
 }
