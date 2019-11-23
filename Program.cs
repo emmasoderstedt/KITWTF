@@ -14,7 +14,23 @@ namespace KITWTF1
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            Console.WriteLine("Välj vad du vill köra:"+
+            "\n[1] Webbsida"+
+            "\n[2] Console Applikation");
+            Int32.TryParse(Console.ReadLine(),out int choice);
+            switch(choice)
+            {
+                    case 1:
+                        CreateWebHostBuilder(args).Build().Run();
+                        break;
+                    case 2:
+                        Menus menu = new Menus();
+                        menu.MainMenu();
+                        break;
+            }
+           
+            
+            
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
