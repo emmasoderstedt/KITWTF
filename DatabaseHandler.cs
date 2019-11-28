@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Data.SqlClient;
 
-namespace mitt_projekt
+namespace KITWTF1.Pages
 {
-    class databaseHandler
+    class DataBaseHandler
     {
         int PersonID;
         private string connectionString="server=40.85.84.155;Database=student29;User Id=student29;Password=YH-student@2019";
@@ -26,7 +26,7 @@ namespace mitt_projekt
                 Phonenumber = Phonenumber
             };
         }
-        private void AddUserToDatabase(LoginDetailsTable loginDetailsTable)
+        public void AddUserToDatabase(LoginDetailsTable loginDetailsTable)
         {
             string executeString = string.Format(
             "INSERT INTO Student29.dbo.LoginDetails VALUES ('{0}','{1}','{2}','{3}','{4}')", 
@@ -86,7 +86,7 @@ namespace mitt_projekt
         public List<Person_PersonTable> ListRelation()
         {
             string executeString = string.Format("SELECT ");
-            return 0;
+            return null;
         }
         
     }
@@ -117,6 +117,12 @@ namespace mitt_projekt
         public string Password {get; set;}
         public string Email {get; set;}
         public string Phonenumber {get; set;}
+
+
+        public override string ToString() 
+        {
+                return Username+Password+Email+Phonenumber;
+        }
     }
 
     class Person_PersonTable : DatabaseTable

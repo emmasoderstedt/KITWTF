@@ -31,7 +31,7 @@ namespace KITWTF1.Pages
 
         public string friendsId { get; set; }
 
-       public string myRelative { get; set; }
+        public string myRelative { get; set; }
 
 
        public override string ToString()
