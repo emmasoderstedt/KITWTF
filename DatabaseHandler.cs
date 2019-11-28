@@ -187,6 +187,7 @@ namespace KITWTF1
             {
                 return item.RemainingTime - 1;
             }
+            return 0;
         }
     }
 
