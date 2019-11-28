@@ -10,13 +10,13 @@ using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using menu;
 
-namespace KITWTF
+namespace KITWTF1
 {
     public class Program
     {
         public static void Main(string[] args)
         {
-            DataBaseHandler dbHandler = new DataBaseHandler();
+            DatabaseHandler dbHandler = new DatabaseHandler();
             // dbHandler.AddUser("Emma","456@654.com", "EÄrNice", "Säkert", "112");
             // dbHandler.AddRelation("Kompis", 2, 3, 30);
 

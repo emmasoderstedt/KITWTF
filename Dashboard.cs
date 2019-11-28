@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using menu;
-namespace KITWTF
+namespace KITWTF1
 {
     public class Dashboard
     {

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Data.SqlClient;
 
-namespace KITWTF
+namespace KITWTF1
 {
-    class DataBaseHandler
+    class DatabaseHandler
     {
         static int PersonID;
 
@@ -33,7 +33,7 @@ namespace KITWTF
             // Add user to the LoginDetails table
             AddUserToDatabase(LoginDetailsTemplate);
         }
-        public void AddUserToDatabase(LoginDetailsTable loginDetailsTable)
+        private void AddUserToDatabase(LoginDetailsTable loginDetailsTable)
         {
             /// <summary> Add a user to the LoginDetails table
             string executeString = string.Format(
@@ -68,18 +68,37 @@ namespace KITWTF
             /// <summary> Adds an relation between two people
             /// <para> Doing this by adding the connection to Person_Person table
 
-            Person_PersonTable contactTable = new Person_PersonTable()
-            {
-                Alias = Alias,
-                PersonID = PersonID,
-                ContactID = ContactID,
-                RemainingTime = RemainingTime
-            };
             string executeString = string.Format("INSERT INTO Student29.dbo.Person_Person VALUES ('{0}', {1}, {2}, {3})",
                                                                                                                     Alias,
                                                                                                                     PersonID,
                                                                                                                     ContactID,
                                                                                                                     RemainingTime);
+            Person_PersonTable.SendQuery(executeString);
+            Debug.WriteLine("Successfully sent: " + executeString);
+        }
+        public void AddRelation(string Alias, int RemainingTime, User User, User ContactUser)
+        {
+            /// <summary> Adds an relation between two people
+            /// <para> Doing this by adding the connection to Person_Person table
+
+            string executeString = string.Format("INSERT INTO Student29.dbo.Person_Person VALUES ('{0}', {1}, {2}, {3})",
+                                                                                                                    Alias,
+                                                                                                                    User.PersonID,
+                                                                                                                    ContactUser.PersonID,
+                                                                                                                    RemainingTime);
+            Person_PersonTable.SendQuery(executeString);
+            Debug.WriteLine("Successfully sent: " + executeString);
+        }
+        public void AddRelation(Person_PersonTable person_PersonTable)
+        {
+            /// <summary> Adds an relation between two people
+            /// <para> Doing this by adding the connection to Person_Person table
+
+            string executeString = string.Format("INSERT INTO Student29.dbo.Person_Person VALUES ('{0}', {1}, {2}, {3})",
+                                                                                                                    person_PersonTable.Alias,
+                                                                                                                    person_PersonTable.PersonID,
+                                                                                                                    person_PersonTable.ContactID,
+                                                                                                                    person_PersonTable.RemainingTime);
             Person_PersonTable.SendQuery(executeString);
             Debug.WriteLine("Successfully sent: " + executeString);
         }
@@ -94,7 +113,7 @@ namespace KITWTF
             var query = LoginDetailsTable.SendAndGetQuery(executeString);
             LoginDetailsTable[] queryArray = query.AsList().ToArray();
             Verify(queryArray);
-        }
+        }   
         public void LoginEmail(string Email, string Password)
         {
             /// <summary> Allows login with Email/Password combination
@@ -118,7 +137,7 @@ namespace KITWTF
         /* ------------------------------ List Relation ----------------------------- */
         public List<Person_PersonTable> ListRelation(int id)
         {
-            /// <summary> Outputs an list where all the elements are open
+            /// <summary> Outputs an list where the query is returned
             string executeString = string.Format("EXEC SelectAllPersonRelation @Id = {0}", id);
             var query = Person_PersonTable.SendAndGetQuery(executeString);
             return query.AsList();
@@ -134,6 +153,18 @@ namespace KITWTF
         }
         public int GetID(string Username)
         {   /// <summary> Returns the ID of the matching Username combination
+            string executeString = string.Format("EXEC GetID @Username = {0}", Username);
+            var query = LoginDetailsTable.SendAndGetQuery(executeString);
+            Debug.WriteLine(query);
+
+            foreach (var item in query)
+            {
+                return item.PersonID;
+            }
+            return 0;
+        }
+        public int GetID(string Name) // TODO 
+        {   /// <summary> Returns the ID of the matching Name combination
             string executeString = string.Format("EXEC GetID @Username = {0}", Username);
             var query = LoginDetailsTable.SendAndGetQuery(executeString);
             Debug.WriteLine(query);
