@@ -14,6 +14,7 @@ namespace KITWTF1
             this.Phonenumber = Phonenumber;
             this.Name = Name;
         }
+        public int PersonID { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
