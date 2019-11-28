@@ -33,7 +33,7 @@ namespace KITWTF
             // Add user to the LoginDetails table
             AddUserToDatabase(LoginDetailsTemplate);
         }
-        public void AddUserToDatabase(LoginDetailsTable loginDetailsTable)
+        private void AddUserToDatabase(LoginDetailsTable loginDetailsTable)
         {
             /// <summary> Add a user to the LoginDetails table
             string executeString = string.Format(
@@ -76,15 +76,15 @@ namespace KITWTF
             Person_PersonTable.SendQuery(executeString);
             Debug.WriteLine("Successfully sent: " + executeString);
         }
-        public void AddRelation(string Alias, int RemainingTime, )
+        public void AddRelation(string Alias, int RemainingTime, User User, User ContactUser)
         {
             /// <summary> Adds an relation between two people
             /// <para> Doing this by adding the connection to Person_Person table
 
             string executeString = string.Format("INSERT INTO Student29.dbo.Person_Person VALUES ('{0}', {1}, {2}, {3})",
                                                                                                                     Alias,
-                                                                                                                    PersonID,
-                                                                                                                    ContactID,
+                                                                                                                    User.PersonID,
+                                                                                                                    ContactUser.PersonID,
                                                                                                                     RemainingTime);
             Person_PersonTable.SendQuery(executeString);
             Debug.WriteLine("Successfully sent: " + executeString);
@@ -113,7 +113,7 @@ namespace KITWTF
             var query = LoginDetailsTable.SendAndGetQuery(executeString);
             LoginDetailsTable[] queryArray = query.AsList().ToArray();
             Verify(queryArray);
-        }
+        }   
         public void LoginEmail(string Email, string Password)
         {
             /// <summary> Allows login with Email/Password combination
