@@ -76,6 +76,19 @@ namespace KITWTF
             Person_PersonTable.SendQuery(executeString);
             Debug.WriteLine("Successfully sent: " + executeString);
         }
+        public void AddRelation(string Alias, int RemainingTime, )
+        {
+            /// <summary> Adds an relation between two people
+            /// <para> Doing this by adding the connection to Person_Person table
+
+            string executeString = string.Format("INSERT INTO Student29.dbo.Person_Person VALUES ('{0}', {1}, {2}, {3})",
+                                                                                                                    Alias,
+                                                                                                                    PersonID,
+                                                                                                                    ContactID,
+                                                                                                                    RemainingTime);
+            Person_PersonTable.SendQuery(executeString);
+            Debug.WriteLine("Successfully sent: " + executeString);
+        }
         public void AddRelation(Person_PersonTable person_PersonTable)
         {
             /// <summary> Adds an relation between two people
@@ -140,6 +153,18 @@ namespace KITWTF
         }
         public int GetID(string Username)
         {   /// <summary> Returns the ID of the matching Username combination
+            string executeString = string.Format("EXEC GetID @Username = {0}", Username);
+            var query = LoginDetailsTable.SendAndGetQuery(executeString);
+            Debug.WriteLine(query);
+
+            foreach (var item in query)
+            {
+                return item.PersonID;
+            }
+            return 0;
+        }
+        public int GetID(string Name) // TODO 
+        {   /// <summary> Returns the ID of the matching Name combination
             string executeString = string.Format("EXEC GetID @Username = {0}", Username);
             var query = LoginDetailsTable.SendAndGetQuery(executeString);
             Debug.WriteLine(query);
