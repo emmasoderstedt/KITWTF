@@ -38,8 +38,8 @@ namespace KITWTF1.Pages
                try
                { 
                    LoginDetailsTable ldt = new LoginDetailsTable();
-                   DataBaseHandler dbth = new DataBaseHandler();
-                   dbth.AddUser(name,email,Username,UserPassword,PhoneNumber);
+                   DatabaseHandler dbth = new DatabaseHandler();
+                   //.AddUser(name,email,Username,UserPassword,PhoneNumber);
                    dbth.AddUserToDatabase(ldt);
                   
 

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using menu;
-namespace KITWTF
+namespace KITWTF1
 {
     public class Dashboard
     {
@@ -9,7 +9,7 @@ namespace KITWTF
         string[] dashboardContent = new string[] { "Se kontakter", "Lägg till kontakt" };
         public void dashboard()
         {
-            databaseHandler DBHandler = new databaseHandler();
+            DatabaseHandler DBHandler = new DatabaseHandler();
             int id = 1;
             var dashboardMenu = new Menu(dashboardContent);
             dashboardMenu = dashboardMenu.GetMenu(dashboardMenu, dashboardHeader);
@@ -30,7 +30,7 @@ namespace KITWTF
 
                 case 1:  //lägg till kontakt
 
-                    databaseHandler dbHandler = new databaseHandler();
+                    DatabaseHandler dbHandler = new DatabaseHandler();
 
                     string menuHeader = "Lägg till kontakt";
                     string[] menuContent = new string[] { "Lägg till befintlig användare", "Lägg till kontakt (utan konto)" };

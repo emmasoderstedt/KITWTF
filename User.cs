@@ -1,4 +1,4 @@
-namespace KITWTF
+namespace KITWTF1
 {
     public class User
     {

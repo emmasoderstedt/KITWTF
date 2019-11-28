@@ -14,6 +14,7 @@ namespace KITWTF1.Pages
     {
         public string email {get; set;}
         
+        public string Username { get; set; }
         public string password {get;set;}
         public int id {get;set;}
 
@@ -32,18 +33,14 @@ namespace KITWTF1.Pages
         {
                try
                { 
-                    string connectionString="server=40.85.84.155;Database=student8;User Id=student8;Password=YH-student@2019";
-                    using (SqlConnection connection = new SqlConnection(connectionString))
-                    {       
-                                     var query =   connection.Query<DBTables>($"select id from users where userName = '{email}' and passWord= '{password}'");
-                                     users = new List<DBTables>(query);
-                                            id  = query.FirstOrDefault().id;                      
+                        DatabaseHandler dbh = new DatabaseHandler();
+                        dbh.LoginUsername(email,password);
                                             if(id!=null)
                                             {
                                                      return Redirect("/LoggedIn?id="+id);
                                             }                                 
                                             return Redirect("/Index?Error=fel"+id);
-                    }
+                    
                }
                catch (System.Exception)
                {             

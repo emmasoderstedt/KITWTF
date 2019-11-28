@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Data.SqlClient;
 
-namespace KITWTF
+namespace KITWTF1
 {
-    class DataBaseHandler
+    class DatabaseHandler
     {
         static int PersonID;
 
