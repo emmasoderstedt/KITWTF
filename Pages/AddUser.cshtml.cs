@@ -37,16 +37,23 @@ namespace KITWTF1.Pages
         {
                try
                { 
-                   LoginDetailsTable ldt = new LoginDetailsTable();
-                   DatabaseHandler dbth = new DatabaseHandler();
+                   User user = new User();
+                   
+                   user.Email = email;
+                   user.Username = Username;
+                   user.Password = Userpassword;
+                   user.Phonenumber = PhoneNumber;
+
+                   DatabaseHandler dbt = new DatabaseHandler();
                    //.AddUser(name,email,Username,UserPassword,PhoneNumber);
-                   dbth.AddUserToDatabase(ldt);
+
+                   dbt.AddUser(user);
                   
 
                }
                catch (System.Exception)
                {             
-                   
+            
                }
         }
     }
