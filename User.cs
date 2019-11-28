@@ -22,6 +22,7 @@ namespace KITWTF
     }
     public class CurrentUser : User
     {
+        public int currentID {get; set;}
         public CurrentUser()
         {
 
