@@ -178,7 +178,7 @@ namespace KITWTF1
 
     /* ------------------------ Change Remaining Time ------------------------ */
         
-        public void ChangeRemainingTime(int Id)
+        public int ChangeRemainingTime(int Id)
         {
             string executeString = string.Format("SELECT RemainingTime FROM Student29.dbo.Person_Person WHERE PersonID = {0}", Id);
             var query = Person_PersonTable.SendAndGetQuery(executeString);
