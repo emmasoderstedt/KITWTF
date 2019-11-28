@@ -163,18 +163,6 @@ namespace KITWTF1
             }
             return 0;
         }
-        public int GetID(string Name) // TODO 
-        {   /// <summary> Returns the ID of the matching Name combination
-            string executeString = string.Format("EXEC GetID @Username = {0}", Username);
-            var query = LoginDetailsTable.SendAndGetQuery(executeString);
-            Debug.WriteLine(query);
-
-            foreach (var item in query)
-            {
-                return item.PersonID;
-            }
-            return 0;
-        }
         public int GetIdentity()
         {
             string connectionString = "server=40.85.84.155;Database=student29;User Id=student29;Password=YH-student@2019";
@@ -186,6 +174,19 @@ namespace KITWTF1
                 {
                     return connection.ExecuteScalar<int>(executeString);
                 }
+        }
+
+    /* ------------------------ Change Remaining Time ------------------------ */
+        
+        public void ChangeRemainingTime(int Id)
+        {
+            string executeString = string.Format("SELECT RemainingTime FROM Student29.dbo.Person_Person WHERE PersonID = {0}", Id);
+            var query = Person_PersonTable.SendAndGetQuery(executeString);
+
+            foreach (var item in query)
+            {
+                return item.RemainingTime - 1;
+            }
         }
     }
 
@@ -217,7 +218,6 @@ namespace KITWTF1
             }
         }
     }
-
     class LoginDetailsTable : DatabaseTable
     {
         public string Username { get; set; }
@@ -240,7 +240,6 @@ namespace KITWTF1
             }
         }
     }
-
     class Person_PersonTable : DatabaseTable
     {
         public int RelationID { get; set; }
