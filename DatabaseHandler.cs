@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 
 namespace KITWTF1
 {
-    class DatabaseHandler
+    public class DatabaseHandler
     {
         static int PersonID;
 
@@ -187,12 +187,13 @@ namespace KITWTF1
             {
                 return item.RemainingTime - 1;
             }
+            return 0;
         }
     }
 
     /* --------------------------------- Tables --------------------------------- */
 
-    class DatabaseTable
+   public class DatabaseTable
     {
         internal static string connectionString = "server=40.85.84.155;Database=student29;User Id=student29;Password=YH-student@2019";
         internal static SqlConnection connection = new SqlConnection(connectionString);
@@ -218,7 +219,7 @@ namespace KITWTF1
             }
         }
     }
-    class LoginDetailsTable : DatabaseTable
+     public class LoginDetailsTable : DatabaseTable
     {
         public string Username { get; set; }
         public string Password { get; set; }
@@ -240,7 +241,7 @@ namespace KITWTF1
             }
         }
     }
-    class Person_PersonTable : DatabaseTable
+     public class Person_PersonTable : DatabaseTable
     {
         public int RelationID { get; set; }
         public string Alias { get; set; }
