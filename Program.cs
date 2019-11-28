@@ -16,7 +16,7 @@ namespace KITWTF
     {
         public static void Main(string[] args)
         {
-            databaseHandler dbHandler = new databaseHandler();
+            DataBaseHandler dbHandler = new DataBaseHandler();
             // dbHandler.AddUser("Emma","456@654.com", "EÄrNice", "Säkert", "112");
             // dbHandler.AddRelation("Kompis", 2, 3, 30);
 
