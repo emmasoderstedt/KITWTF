@@ -68,18 +68,24 @@ namespace KITWTF
             /// <summary> Adds an relation between two people
             /// <para> Doing this by adding the connection to Person_Person table
 
-            Person_PersonTable contactTable = new Person_PersonTable()
-            {
-                Alias = Alias,
-                PersonID = PersonID,
-                ContactID = ContactID,
-                RemainingTime = RemainingTime
-            };
             string executeString = string.Format("INSERT INTO Student29.dbo.Person_Person VALUES ('{0}', {1}, {2}, {3})",
                                                                                                                     Alias,
                                                                                                                     PersonID,
                                                                                                                     ContactID,
                                                                                                                     RemainingTime);
+            Person_PersonTable.SendQuery(executeString);
+            Debug.WriteLine("Successfully sent: " + executeString);
+        }
+        public void AddRelation(Person_PersonTable person_PersonTable)
+        {
+            /// <summary> Adds an relation between two people
+            /// <para> Doing this by adding the connection to Person_Person table
+
+            string executeString = string.Format("INSERT INTO Student29.dbo.Person_Person VALUES ('{0}', {1}, {2}, {3})",
+                                                                                                                    person_PersonTable.Alias,
+                                                                                                                    person_PersonTable.PersonID,
+                                                                                                                    person_PersonTable.ContactID,
+                                                                                                                    person_PersonTable.RemainingTime);
             Person_PersonTable.SendQuery(executeString);
             Debug.WriteLine("Successfully sent: " + executeString);
         }
@@ -118,7 +124,7 @@ namespace KITWTF
         /* ------------------------------ List Relation ----------------------------- */
         public List<Person_PersonTable> ListRelation(int id)
         {
-            /// <summary> Outputs an list where all the elements are open
+            /// <summary> Outputs an list where the query is returned
             string executeString = string.Format("EXEC SelectAllPersonRelation @Id = {0}", id);
             var query = Person_PersonTable.SendAndGetQuery(executeString);
             return query.AsList();
