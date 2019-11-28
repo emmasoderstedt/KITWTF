@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 
 namespace KITWTF
 {
-    class databaseHandler
+    class DataBaseHandler
     {
         static int PersonID;
 
@@ -33,7 +33,7 @@ namespace KITWTF
             // Add user to the LoginDetails table
             AddUserToDatabase(LoginDetailsTemplate);
         }
-        private void AddUserToDatabase(LoginDetailsTable loginDetailsTable)
+        public void AddUserToDatabase(LoginDetailsTable loginDetailsTable)
         {
             /// <summary> Add a user to the LoginDetails table
             string executeString = string.Format(
