@@ -23,6 +23,7 @@ namespace KITWTF1
     }
     public class CurrentUser : User
     {
+        public int currentID {get; set;}
         public CurrentUser()
         {
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using menu;
+
 namespace KITWTF1
 {
     public class Dashboard
@@ -10,7 +11,6 @@ namespace KITWTF1
         public void dashboard()
         {
             DatabaseHandler DBHandler = new DatabaseHandler();
-            int id = 1;
             var dashboardMenu = new Menu(dashboardContent);
             dashboardMenu = dashboardMenu.GetMenu(dashboardMenu, dashboardHeader);
 
@@ -18,7 +18,7 @@ namespace KITWTF1
             {
                 case 0: //se kontakter 
                     List<Person_PersonTable> relations = new List<Person_PersonTable>();
-                    relations = DBHandler.ListRelation(id);
+                    //relations = DBHandler.ListRelation(CurrentUser.currentId);
 
                     foreach (var relation in relations)
                     {
@@ -29,8 +29,6 @@ namespace KITWTF1
                     break;
 
                 case 1:  //lägg till kontakt
-
-                    DatabaseHandler dbHandler = new DatabaseHandler();
 
                     string menuHeader = "Lägg till kontakt";
                     string[] menuContent = new string[] { "Lägg till befintlig användare", "Lägg till kontakt (utan konto)" };
@@ -43,8 +41,8 @@ namespace KITWTF1
                         case 0: //Lägg till befrintlig användare
                             Console.WriteLine("Skriv in din väns användarnamn: ");
                             string friendUsername = Console.ReadLine();
-                            int friendId = dbHandler.GetID(friendUsername);
-                            if (friendId != 0)
+                            int friend_id = DBHandler.GetID(friendUsername);
+                            if (friend_id != 0)
                             {
                                 Console.WriteLine("Skriv in ett namn på er relation:");
                                 string alias = Console.ReadLine();
@@ -52,7 +50,7 @@ namespace KITWTF1
                                 Console.WriteLine("Skriv in antal dagar du ska ha på dig att kontakta personen: ");
                                 int remaningTime = Console.Read();
 
-                                DBHandler.AddRelation(alias, id, friendId, remaningTime);
+                                //DBHandler.AddRelation(alias, id, friend_id, remaningTime);
                             } else {
                                 Console.WriteLine("Angivet användarnamn finnns ej registrerat.");
                             }
@@ -68,9 +66,15 @@ namespace KITWTF1
                             Console.Write("Skriv in telefonnummer: ");
                             newUser.Phonenumber = Console.ReadLine();
                             DBHandler.AddUser(newUser);
+                            friend_id = DBHandler.GetIdentity();
                             
                             Console.Write("Skriv in namn på relationen: ");
                             string relationName = Console.ReadLine();
+
+                            Console.Write("Hur ofta vill du kontakta denna personen? ");
+                            int contactTime = Console.Read();
+
+                            DBHandler.AddRelation(relationName, 124, friend_id, contactTime);
                             
                             break;
                     }
