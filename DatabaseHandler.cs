@@ -5,10 +5,9 @@ using System.Data.SqlClient;
 
 namespace KITWTF
 {
-    class databaseHandler
+    class DataBaseHandler
     {
         static int PersonID;
-        private static string connectionString = "server=40.85.84.155;Database=Student29;User Id=student29;Password=YH-student@2019";
 
         /* -------------------------------- Add User -------------------------------- */
         public void AddUser(User user)
@@ -34,7 +33,7 @@ namespace KITWTF
             // Add user to the LoginDetails table
             AddUserToDatabase(LoginDetailsTemplate);
         }
-        private void AddUserToDatabase(LoginDetailsTable loginDetailsTable)
+        public void AddUserToDatabase(LoginDetailsTable loginDetailsTable)
         {
             /// <summary> Add a user to the LoginDetails table
             string executeString = string.Format(
@@ -62,6 +61,8 @@ namespace KITWTF
         }
 
         /* ------------------------------ Add Relation ------------------------------ */
+        
+        //ändra så den tar emot person object?
         public void AddRelation(string Alias, int PersonID, int ContactID, int RemainingTime)
         {
             /// <summary> Adds an relation between two people
@@ -136,7 +137,24 @@ namespace KITWTF
             string executeString = string.Format("EXEC GetID @Username = {0}", Username);
             var query = LoginDetailsTable.SendAndGetQuery(executeString);
             Debug.WriteLine(query);
-            return 1;
+
+            foreach (var item in query)
+            {
+                return item.PersonID;
+            }
+            return 0;
+        }
+        public int GetIdentity()
+        {
+            string connectionString = "server=40.85.84.155;Database=student29;User Id=student29;Password=YH-student@2019";
+            SqlConnection connection = new SqlConnection(connectionString);
+
+            string executeString = string.Format("SELECT CAST(SCOPE_IDENTITY() as int) FROM Student29.dbo.Person");
+
+                using (connection)
+                {
+                    return connection.ExecuteScalar<int>(executeString);
+                }
         }
     }
 
@@ -145,6 +163,7 @@ namespace KITWTF
     class DatabaseTable
     {
         internal static string connectionString = "server=40.85.84.155;Database=student29;User Id=student29;Password=YH-student@2019";
+        internal static SqlConnection connection = new SqlConnection(connectionString);
         public int PersonID { get; set; }
     }
     class PersonTable : DatabaseTable
@@ -152,14 +171,15 @@ namespace KITWTF
         public string Name { get; set; }
         public static void SendQuery(string ExecuteString)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (connection)
             {
                 connection.Query<PersonTable>(ExecuteString);
+                
             }
         }
         public static IEnumerable<PersonTable> SendAndGetQuery(string ExecuteString)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (connection)
             {
                 var query = connection.Query<PersonTable>(ExecuteString);
                 return query;
@@ -175,14 +195,14 @@ namespace KITWTF
         public string Phonenumber { get; set; }
         public static void SendQuery(string ExecuteString)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (connection)
             {
                 connection.Query<LoginDetailsTable>(ExecuteString);
             }
         }
         public static IEnumerable<LoginDetailsTable> SendAndGetQuery(string ExecuteString)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (connection)
             {
                 var query = connection.Query<LoginDetailsTable>(ExecuteString);
                 return query;
