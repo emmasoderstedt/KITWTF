@@ -39,9 +39,9 @@ namespace KITWTF1
             string executeString = string.Format(
             "INSERT INTO Student29.dbo.LoginDetails VALUES ('{0}','{1}','{2}','{3}','{4}')",
                                                                         loginDetailsTable.PersonID,
-                                                                        loginDetailsTable.Email,
                                                                         loginDetailsTable.Username,
                                                                         loginDetailsTable.Password,
+                                                                        loginDetailsTable.Email,
                                                                         loginDetailsTable.Phonenumber);
             LoginDetailsTable.SendQuery(executeString);
             Debug.WriteLine("Successfully sent: " + executeString);
@@ -102,7 +102,7 @@ namespace KITWTF1
             Debug.WriteLine("Successfully sent: " + executeString);
         }
         /* ---------------------------------- Login --------------------------------- */
-        public void LoginUsername(string Username, string Password)//return bool pls
+        public bool LoginUsername(string Username, string Password)//return bool pls
         {
             /// <summary> Allows login with Username/Password combination
             string executeString = string.Format(
@@ -111,9 +111,9 @@ namespace KITWTF1
                 Password);
             var query = LoginDetailsTable.SendAndGetQuery(executeString);
             LoginDetailsTable[] queryArray = query.AsList().ToArray();
-            Verify(queryArray);
+            return isCorrectCredentials(queryArray);
         }   
-        public void LoginEmail(string Email, string Password)
+        public bool LoginEmail(string Email, string Password)
         {
             /// <summary> Allows login with Email/Password combination
             string executeString = string.Format(
@@ -122,14 +122,30 @@ namespace KITWTF1
                 Password);
             var query = LoginDetailsTable.SendAndGetQuery(executeString);
             LoginDetailsTable[] queryArray = query.AsList().ToArray();
-            Verify(queryArray);
+            return isCorrectCredentials(queryArray);
         }
-        private void Verify(LoginDetailsTable[] queryArray)
+        private bool isCorrectCredentials(LoginDetailsTable[] queryArray)
         {
             /// <summary> Internal system that verify that there are matched logins
             if (queryArray == null || queryArray.Length == 0)
             {
-                throw new System.Exception("No matching credentials");
+                Debug.WriteLine("No matching credentials");
+                return false;
+            }
+            else if (queryArray.Length == 1)
+            {
+                Debug.WriteLine("The credentials matched!");
+                return true;
+            }
+            else if (queryArray.Length > 1)
+            {
+                Debug.WriteLine("Multiple matching accounts");
+                return false;
+            }
+            else
+            {
+                Debug.WriteLine("Unkown Error!");
+                return false;
             }
         }
 
@@ -206,8 +222,8 @@ namespace KITWTF1
 
    public class DatabaseTable
     {
-        internal static string connectionString = "server=40.85.84.155;Database=student29;User Id=student29;Password=YH-student@2019";
-        internal static SqlConnection connection = new SqlConnection(connectionString);
+        internal static string connectionString = @"server=40.85.84.155;Database=student29;User Id=student29;Password=YH-student@2019";
+        // internal static SqlConnection connection = new SqlConnection(connectionString);
         public int PersonID { get; set; }
     }
     class PersonTable : DatabaseTable
@@ -215,7 +231,7 @@ namespace KITWTF1
         public string Name { get; set; }
         public static void SendQuery(string ExecuteString)
         {
-            using (connection)
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Query<PersonTable>(ExecuteString);
                 
@@ -223,7 +239,7 @@ namespace KITWTF1
         }
         public static IEnumerable<PersonTable> SendAndGetQuery(string ExecuteString)
         {
-            using (connection)
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 var query = connection.Query<PersonTable>(ExecuteString);
                 return query;
@@ -238,14 +254,14 @@ namespace KITWTF1
         public string Phonenumber { get; set; }
         public static void SendQuery(string ExecuteString)
         {
-            using (connection)
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Query<LoginDetailsTable>(ExecuteString);
             }
         }
         public static IEnumerable<LoginDetailsTable> SendAndGetQuery(string ExecuteString)
         {
-            using (connection)
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 var query = connection.Query<LoginDetailsTable>(ExecuteString);
                 return query;
