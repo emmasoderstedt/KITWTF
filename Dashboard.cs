@@ -8,7 +8,7 @@ namespace KITWTF1
     {
         string dashboardHeader = "Dashboard";
         string[] dashboardContent = new string[] { "Se kontakter", "Lägg till kontakt", "Logga ut" };
-        public void dashboard(int myId)
+        public void dashboard(int userID)
         {
             while (true)
             {
@@ -19,7 +19,7 @@ namespace KITWTF1
                 {
                     case 0: //se kontakter 
                         List<Person_PersonTable> relations = new List<Person_PersonTable>();
-                        relations = DBHandler.ListRelation(myId);
+                        relations = DBHandler.ListRelation(userID);
 
                         foreach (var relation in relations)
                         {
@@ -42,10 +42,11 @@ namespace KITWTF1
                             case 0: //Lägg till befrintlig användare
                                 while (true)
                                 {
+                                    int userFriendID;
                                     Console.WriteLine("Skriv in din väns användarnamn: ");
                                     string friendUsername = Console.ReadLine();
-                                    int contactId = DBHandler.GetID(friendUsername);
-                                    if (contactId != 0)
+                                    userFriendID = DBHandler.GetID(friendUsername);
+                                    if (userFriendID != 0)
                                     {
                                         Console.WriteLine("Skriv in ett namn på er relation:");
                                         string alias = Console.ReadLine();
@@ -53,7 +54,7 @@ namespace KITWTF1
                                         Console.WriteLine("Skriv in antal dagar du ska ha på dig att kontakta personen: ");
                                         int remaningTime = Console.Read();
 
-                                        //DBHandler.AddRelation(alias, id, friend_id, remaningTime);
+                                        DBHandler.AddRelation(alias, userID, userFriendID, remaningTime);
                                     }
                                     else
                                     {
@@ -74,7 +75,7 @@ namespace KITWTF1
                                 newUser.Phonenumber = Console.ReadLine();
 
                                 DBHandler.AddUser(newUser);
-                                int friendId = DBHandler.GetIdentity();
+                                int friendID = DBHandler.GetIdentity();
 
                                 Console.Write("Skriv in namn på relationen: ");
                                 string relationName = Console.ReadLine();
@@ -82,7 +83,7 @@ namespace KITWTF1
                                 Console.Write("Hur ofta vill du kontakta denna personen? ");
                                 int contactTime = Console.Read();
 
-                                DBHandler.AddRelation(relationName, myId, friendId, contactTime);
+                                DBHandler.AddRelation(relationName, userID, friendID, contactTime);
 
                                 break;
                         }

@@ -35,7 +35,7 @@ namespace KITWTF1.Pages
                { 
                         DatabaseHandler dbh = new DatabaseHandler();
                         dbh.LoginUsername(email,password);
-                                            if(id!=null)
+                                            if(id!=0)
                                             {
                                                      return Redirect("/LoggedIn?id="+id);
                                             }                                 

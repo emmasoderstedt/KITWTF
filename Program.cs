@@ -48,15 +48,22 @@ namespace KITWTF1
 
                                 Console.Write("Skriv in ditt användarnamn: ");
                                 var username = Console.ReadLine();
-                                // Console.Write("Ange lösenord");
-                                // var password = Console.ReadLine();
-                                // dbHandler.LoginUsername(username, password);
-                                // //om godkänt skicka koden vidare till Dashboard.cs
-                                //     int userID = dbHandler.GetID(username);
 
-                                Dashboard dashboard = new Dashboard();
-                                int ID = dbHandler.GetID(username);
-                                dashboard.dashboard(ID);
+                                Console.Write("Ange lösenord");
+                                var password = Console.ReadLine();
+
+                                dbHandler.LoginUsername(username, password);//om godkänt skicka koden vidare till Dashboard.cs
+                                    
+                                    int userID = dbHandler.GetID(username);
+                                    Dashboard dashboard = new Dashboard();
+                                    int ID = dbHandler.GetID(username);
+                                    dashboard.dashboard(ID);
+
+                                // else
+                                //{
+                                //     Console.WriteLine("Felaktigt lösenord eller användarnamn. \nFörsök igen");
+                                // }
+
 
 
 
@@ -64,22 +71,29 @@ namespace KITWTF1
 
                             case 1: //Skapa nytt konto
 
-                                User user = new User();
+                                User newUser = new User();
 
                                 Console.Write("Skriv in ditt namn: ");
-                                user.Name = Console.ReadLine();
+                                newUser.Name = Console.ReadLine();
 
                                 Console.Write("Skriv in användarnamn: ");
-                                user.Username = Console.ReadLine();
+                                newUser.Username = Console.ReadLine();
 
                                 Console.Write("Skriv in lösenord: ");
-                                user.Password = Console.ReadLine();
+                                newUser.Password = Console.ReadLine();
 
                                 Console.Write("Skriv in e-post adress: ");
-                                user.Email = Console.ReadLine();
+                                newUser.Email = Console.ReadLine();
 
                                 Console.Write("Skriv in telefonnummer: ");
-                                user.Phonenumber = Console.ReadLine();
+                                newUser.Phonenumber = Console.ReadLine();
+                                try{
+                                    int phoneAsInt = Convert.ToInt32(newUser.Phonenumber);
+                                    dbHandler.AddUser(newUser);
+                                }catch{
+                                    Console.WriteLine("Ange endast siffror i telefonnummer.");
+                                }
+
 
                                 break;
                         }
