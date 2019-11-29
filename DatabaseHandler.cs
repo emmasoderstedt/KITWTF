@@ -103,7 +103,7 @@ namespace KITWTF1
             Debug.WriteLine("Successfully sent: " + executeString);
         }
         /* ---------------------------------- Login --------------------------------- */
-        public void LoginUsername(string Username, string Password)
+        public void LoginUsername(string Username, string Password)//return bool pls
         {
             /// <summary> Allows login with Username/Password combination
             string executeString = string.Format(
@@ -163,7 +163,7 @@ namespace KITWTF1
             }
             return 0;
         }
-        public int GetIdentity()
+        public int GetIdentity()//Returns the ID of the latest submission to the DB
         {
             string connectionString = "server=40.85.84.155;Database=student29;User Id=student29;Password=YH-student@2019";
             SqlConnection connection = new SqlConnection(connectionString);

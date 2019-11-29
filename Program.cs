@@ -27,56 +27,65 @@ namespace KITWTF1
 
             var startMenu = new Menu(startMenuContent);
             startMenu = startMenu.GetMenu(startMenu, startMenuHeader);
-
-            switch (startMenu.SelectedIndex)
+            while (true)
             {
-                case 0: //Starta webserver
-                    CreateWebHostBuilder(args).Build().Run();
-                    break;
-                case 1:  //Starta konsollapp
+                switch (startMenu.SelectedIndex)
+                {
+                    case 0: //Starta webserver
+                        CreateWebHostBuilder(args).Build().Run();
+                        break;
+                    case 1:  //Starta konsollapp
 
-                    string mainMenuHeader = "KITWTF";
-                    string[] mainMenuContent = new string[] { "Logga in", "Skapa nytt konto" };
+                        string mainMenuHeader = "KITWTF";
+                        string[] mainMenuContent = new string[] { "Logga in", "Skapa nytt konto" };
 
-                    var mainMenu = new Menu(mainMenuContent);
-                    mainMenu = mainMenu.GetMenu(mainMenu, mainMenuHeader);
+                        var mainMenu = new Menu(mainMenuContent);
+                        mainMenu = mainMenu.GetMenu(mainMenu, mainMenuHeader);
 
-                    switch (mainMenu.SelectedIndex)
-                    {
-                        case 0://Logga in
+                        switch (mainMenu.SelectedIndex)
+                        {
+                            case 0://Logga in
 
-                            Console.Write("Skriv in ditt användarnamn: ");
-                            CurrentUser currentUser = new CurrentUser();
-                            currentUser.Username = Console.ReadLine();
-                            dbHandler.LoginUsername(currentUser.Username, currentUser.Password);
+                                Console.Write("Skriv in ditt användarnamn: ");
+                                var username = Console.ReadLine();
+                                // Console.Write("Ange lösenord");
+                                // var password = Console.ReadLine();
+                                // dbHandler.LoginUsername(username, password);
+                                // //om godkänt skicka koden vidare till Dashboard.cs
+                                //     int userID = dbHandler.GetID(username);
+
+                                Dashboard dashboard = new Dashboard();
+                                int ID = dbHandler.GetID(username);
+                                dashboard.dashboard(ID);
 
 
-                            currentUser.currentID = dbHandler.GetID(currentUser.Username);
 
-                            break;
+                                break;
 
-                        case 1: //Skapa nytt konto
+                            case 1: //Skapa nytt konto
 
-                            User user = new User();
+                                User user = new User();
 
-                            Console.Write("Skriv in ditt namn:");
-                            user.Name = Console.ReadLine();
+                                Console.Write("Skriv in ditt namn: ");
+                                user.Name = Console.ReadLine();
 
-                            Console.Write("Skriv in användarnamn:");
-                            user.Username = Console.ReadLine();
+                                Console.Write("Skriv in användarnamn: ");
+                                user.Username = Console.ReadLine();
 
-                            Console.Write("Skriv in lösenord:");
-                            user.Password = Console.ReadLine();
+                                Console.Write("Skriv in lösenord: ");
+                                user.Password = Console.ReadLine();
 
-                            Console.Write("Skriv in e-post adress");
-                            user.Email = Console.ReadLine();
+                                Console.Write("Skriv in e-post adress: ");
+                                user.Email = Console.ReadLine();
 
-                            Console.Write("Skriv in telefonnummer:");
-                            user.Phonenumber = Console.ReadLine();
+                                Console.Write("Skriv in telefonnummer: ");
+                                user.Phonenumber = Console.ReadLine();
 
-                            break;
-                    }
-                    break;
+                                break;
+                        }
+                        break;
+
+                }
             }
         }
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

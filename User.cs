@@ -21,12 +21,4 @@ namespace KITWTF1
         public string Phonenumber { get; set; }
         public string Name { get; set; }
     }
-    public class CurrentUser : User
-    {
-        public int currentID {get; set;}
-        public CurrentUser()
-        {
-
-        }
-    }
 }
