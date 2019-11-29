@@ -44,17 +44,18 @@ namespace KITWTF1
                                 Console.Write("Skriv in ditt lösenord : ");
                                 var password = Console.ReadLine();
 
-                                dbHandler.LoginUsername(username, password);//om godkänt skicka koden vidare till Dashboard.cs
-                                    
+                                bool loggedIn = dbHandler.LoginUsername(username, password);//om godkänt skicka koden vidare till Dashboard.cs
+                                if (loggedIn){
                                     int userID = dbHandler.GetID(username);
                                     Dashboard dashboard = new Dashboard();
                                     int ID = dbHandler.GetID(username);
                                     dashboard.dashboard(ID);
-
-                                // else
-                                //{
-                                //     Console.WriteLine("Felaktigt lösenord eller användarnamn. \nFörsök igen");
-                                // }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Felaktigt lösenord eller användarnamn. \n Tryck valfri tangent för att försöka igen");
+                                    Console.ReadKey();
+                                }
 
 
 

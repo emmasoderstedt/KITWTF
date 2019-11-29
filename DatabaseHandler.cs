@@ -159,7 +159,10 @@ namespace KITWTF1
         }
 
         /* --------------------------------- Search --------------------------------- */
-        public List<LoginDetailsTable> GetData(string Username)
+        public void GetInfo (){//gets trimmed down info
+            
+        }
+        private List<LoginDetailsTable> getData(string Username)
         {
             /// <summary> Returns Username, UserPassword, Email, PhoneNumber as a array for the matching Username
             string executeString = string.Format("EXEC SearchForUsername @Username = {0}", Username);

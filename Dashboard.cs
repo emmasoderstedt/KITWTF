@@ -15,11 +15,12 @@ namespace KITWTF1
                 DatabaseHandler DBHandler = new DatabaseHandler();
                 var dashboardMenu = new Menu(dashboardContent);
                 dashboardMenu = dashboardMenu.GetMenu(dashboardMenu, dashboardHeader);
-                switch (dashboardMenu.SelectedIndex)//dasboard meny.
+                switch (dashboardMenu.SelectedIndex) //dasboard menu
                 {
                     case 0: //se kontakter 
                         List<Person_PersonTable> relations = new List<Person_PersonTable>();
                         relations = DBHandler.ListRelation(userID);
+                        
 
                         foreach (var relation in relations)
                         {
@@ -27,12 +28,13 @@ namespace KITWTF1
                             Console.WriteLine("Tid kvar: " + relation.RemainingTime);
                             Console.WriteLine("--------------------------------------");
                         }
+                        Console.ReadKey();
                         break;
 
                     case 1:  //lägg till kontakt
 
                         string menuHeader = "Lägg till kontakt";
-                        string[] menuContent = new string[] { "Lägg till befintlig användare", "Lägg till kontakt (utan konto)" };
+                        string[] menuContent = new string[] { "Lägg till befintlig användare", "Lägg till kontakt utan konto" };
 
                         var addContactMenu = new Menu(menuContent);
                         addContactMenu = addContactMenu.GetMenu(addContactMenu, menuHeader);
