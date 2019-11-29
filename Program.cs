@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using menu;
 
@@ -17,8 +11,6 @@ namespace KITWTF1
         public static void Main(string[] args)
         {
             DatabaseHandler dbHandler = new DatabaseHandler();
-            // dbHandler.AddUser("Emma","456@654.com", "EÄrNice", "Säkert", "112");
-            // dbHandler.AddRelation("Kompis", 2, 3, 30);
 
             Debug.WriteLine(dbHandler.GetIdentity());
 
@@ -49,7 +41,7 @@ namespace KITWTF1
                                 Console.Write("Skriv in ditt användarnamn: ");
                                 var username = Console.ReadLine();
 
-                                Console.Write("Ange lösenord");
+                                Console.Write("Skriv in ditt lösenord : ");
                                 var password = Console.ReadLine();
 
                                 dbHandler.LoginUsername(username, password);//om godkänt skicka koden vidare till Dashboard.cs
