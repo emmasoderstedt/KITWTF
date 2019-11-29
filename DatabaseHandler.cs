@@ -189,6 +189,18 @@ namespace KITWTF1
             }
             return 0;
         }
+
+        public int GetRemainingTime(int Id)
+        {
+            string executeString = string.Format("SELECT RemainingTime FROM Student29.dbo.Person_Person WHERE PersonID = {0}", Id);
+            var query = Person_PersonTable.SendAndGetQuery(executeString);
+            
+            foreach (var item in query)
+            {
+                return item.RemainingTime;
+            }
+            return 0;
+        }
     }
 
     /* --------------------------------- Tables --------------------------------- */
