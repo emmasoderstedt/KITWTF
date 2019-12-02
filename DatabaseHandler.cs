@@ -196,13 +196,13 @@ namespace KITWTF1
     /* ------------------------ Change Remaining Time ------------------------ */
         public void ChangeRemainingTime(int Id)
         {
-            string executeString = string.Format("SELECT RemainingTime FROM Student29.dbo.Person_Person WHERE PersonID = {0}", Id);
+            string executeString = string.Format("UPDATE Student29.dbo.Person_Person SET RemainingTime =- 1", Id);
             Person_PersonTable.SendQuery(executeString);
         }
 
-        public int GetRemainingTime(int Id)
+        public int GetRemainingTime(int PersonID, int ContactID)
         {
-            string executeString = string.Format("UPDATE Student29.dbo.Person_Person SET RemainingTime =- 1", Id);
+            string executeString = string.Format("SELECT RemainingTime FROM Student29.dbo.Person_Person WHERE PersonID = {0} AND ContactID = {1]", PersonID, ContactID);
             var query = Person_PersonTable.SendAndGetQuery(executeString);
             
             foreach (var item in query)
