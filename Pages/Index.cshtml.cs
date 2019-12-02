@@ -20,7 +20,6 @@ namespace KITWTF1.Pages
 
         public string nameTest { get; set; }
 
-        public  List<DBTables> users = new List<DBTables>();
       
    
         public void OnGet()

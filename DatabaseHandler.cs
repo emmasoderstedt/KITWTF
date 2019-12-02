@@ -128,6 +128,7 @@ namespace KITWTF1
         private bool isCorrectCredentials(LoginDetailsTable[] queryArray)
         {
             /// <summary> Internal system that verify that there are matched logins
+            /// <para> Writes to the debuger for the different stages
             if (queryArray == null || queryArray.Length == 0)
             {
                 Debug.WriteLine("No matching credentials");
@@ -193,7 +194,6 @@ namespace KITWTF1
         }
 
     /* ------------------------ Change Remaining Time ------------------------ */
-        
         public void ChangeRemainingTime(int Id)
         {
             string executeString = string.Format("SELECT RemainingTime FROM Student29.dbo.Person_Person WHERE PersonID = {0}", Id);
