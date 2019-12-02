@@ -17,9 +17,16 @@ namespace KITWTF1
         public static void Main(string[] args)
         {
             DatabaseHandler dbHandler = new DatabaseHandler();
-            // dbHandler.AddUser("Emma","456@654.com", "EÄrNice", "Säkert", "112");
-            // dbHandler.AddRelation("Kompis", 2, 3, 30);
-
+            User user = new User() {
+                Name = "Emma",
+                Email = "123@123",
+                Password = "EÄrNice",
+                Username = "Ouf",
+                Phonenumber = "112"
+            };
+             dbHandler.AddUser(user);
+             dbHandler.AddRelation("Kompis", 6000, 6001, 30);
+            
             Debug.WriteLine(dbHandler.GetIdentity());
 
             string startMenuHeader = "Välj vad du vill köra:";
