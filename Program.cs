@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using menu;
 
@@ -17,16 +11,7 @@ namespace KITWTF1
         public static void Main(string[] args)
         {
             DatabaseHandler dbHandler = new DatabaseHandler();
-            User user = new User() {
-                Name = "Emma",
-                Email = "123@123",
-                Password = "EÄrNice",
-                Username = "Ouf",
-                Phonenumber = "112"
-            };
-             dbHandler.AddUser(user);
-             dbHandler.AddRelation("Kompis", 6000, 6001, 30);
-            
+
             Debug.WriteLine(dbHandler.GetIdentity());
 
             string startMenuHeader = "Välj vad du vill köra:";
@@ -56,20 +41,21 @@ namespace KITWTF1
                                 Console.Write("Skriv in ditt användarnamn: ");
                                 var username = Console.ReadLine();
 
-                                Console.Write("Ange lösenord");
+                                Console.Write("Skriv in ditt lösenord : ");
                                 var password = Console.ReadLine();
 
-                                dbHandler.LoginUsername(username, password);//om godkänt skicka koden vidare till Dashboard.cs
-                                    
+                                bool loggedIn = dbHandler.LoginUsername(username, password);//om godkänt skicka koden vidare till Dashboard.cs
+                                if (loggedIn){
                                     int userID = dbHandler.GetID(username);
                                     Dashboard dashboard = new Dashboard();
                                     int ID = dbHandler.GetID(username);
                                     dashboard.dashboard(ID);
-
-                                // else
-                                //{
-                                //     Console.WriteLine("Felaktigt lösenord eller användarnamn. \nFörsök igen");
-                                // }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Felaktigt lösenord eller användarnamn. \n Tryck valfri tangent för att försöka igen");
+                                    Console.ReadKey();
+                                }
 
 
 

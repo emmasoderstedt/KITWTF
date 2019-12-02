@@ -62,7 +62,6 @@ namespace KITWTF1
 
         /* ------------------------------ Add Relation ------------------------------ */
         
-        //ändra så den tar emot person object?
         public void AddRelation(string Alias, int PersonID, int ContactID, int RemainingTime)
         {
             /// <summary> Adds an relation between two people
@@ -107,7 +106,7 @@ namespace KITWTF1
         {
             /// <summary> Allows login with Username/Password combination
             string executeString = string.Format(
-                "SELECT PersonID FROM Student29.dbo.LoginDetails WHERE Username = '{0}' AND Password = '{1}",
+                "SELECT PersonID FROM Student29.dbo.LoginDetails WHERE Username = '{0}' AND UserPassword = '{1}'",
                 Username,
                 Password);
             var query = LoginDetailsTable.SendAndGetQuery(executeString);
@@ -161,7 +160,10 @@ namespace KITWTF1
         }
 
         /* --------------------------------- Search --------------------------------- */
-        public List<LoginDetailsTable> GetData(string Username)
+        public void GetInfo (){//gets trimmed down info
+            
+        }
+        private List<LoginDetailsTable> getData(string Username)
         {
             /// <summary> Returns Username, UserPassword, Email, PhoneNumber as a array for the matching Username
             string executeString = string.Format("EXEC SearchForUsername @Username = {0}", Username);
