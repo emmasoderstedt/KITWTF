@@ -22,6 +22,7 @@ namespace KITWTF1
             };
             // Add user to the Person table
             AddUserToDatabase(personTemplate);
+            GetID(personTemplate.Name)
 
             // Creates and assign values
             LoginDetailsTable LoginDetailsTemplate = new LoginDetailsTable()
@@ -175,7 +176,7 @@ namespace KITWTF1
         }
         public int GetID(string Username)
         {   /// <summary> Returns the ID of the matching Username combination
-            string executeString = string.Format("EXEC GetID @Username = {0}", Username);
+            string executeString = string.Format("EXEC GetID @Username = '{0}'", Username);
             var query = LoginDetailsTable.SendAndGetQuery(executeString);
             Debug.WriteLine(query);
 
@@ -199,9 +200,9 @@ namespace KITWTF1
         }
 
     /* ------------------------ Change Remaining Time ------------------------ */
-        public void ChangeRemainingTime(int Id)
+        public void ChangeRemainingTime(int PersonID)
         {
-            string executeString = string.Format("UPDATE Student29.dbo.Person_Person SET RemainingTime =- 1", Id);
+            string executeString = string.Format("UPDATE Student29.dbo.Person_Person SET RemainingTime =- 1", PersonID);
             Person_PersonTable.SendQuery(executeString);
         }
 
