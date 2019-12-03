@@ -7,8 +7,6 @@ namespace KITWTF1
 {
     public class DatabaseHandler
     {
-        static int PersonID;
-
        public static string userName;
 
         /* -------------------------------- Add User -------------------------------- */
@@ -22,12 +20,13 @@ namespace KITWTF1
             };
             // Add user to the Person table
             AddUserToDatabase(personTemplate);
-            GetID(personTemplate.Name);
+            
+            int personID = GetID(personTemplate.Name);
 
             // Creates and assign values
             LoginDetailsTable LoginDetailsTemplate = new LoginDetailsTable()
             {
-                PersonID = PersonID,
+                PersonID = personID,
                 Email = user.Email,
                 Username = user.Username,
                 Password = user.Password,
@@ -35,6 +34,12 @@ namespace KITWTF1
             };
             // Add user to the LoginDetails table
             AddUserToDatabase(LoginDetailsTemplate);
+        }
+
+        public void AddPerson(string Name)
+        {
+            string executeString = string.Format("INSERT INTO Person (PersonName) VALUES ('{0}')", Name);
+            PersonTable.SendQuery(executeString);
         }
         private void AddUserToDatabase(LoginDetailsTable loginDetailsTable)
         {
@@ -52,13 +57,13 @@ namespace KITWTF1
         private void AddUserToDatabase(PersonTable personTable)
         {
             /// <summary> Add a user to the Person table
-            string executeString = "INSERT INTO Student29.dbo.Person(PersonName) OUTPUT INSERTED.PersonID VALUES ('" + personTable.Name + "')";
+            string executeString = string.Format("INSERT INTO Student29.dbo.Person(PersonName) OUTPUT INSERTED.PersonID VALUES ('{0}')", personTable.Name);
 
             var query = PersonTable.SendAndGetQuery(executeString);
             Debug.WriteLine("Successfully sent: " + executeString);
             foreach (var items in query)
             {
-                PersonID = items.PersonID;
+                //PersonID = items.PersonID;
                 Debug.WriteLine("PersonID: " + items.PersonID);
             }
         }
@@ -70,11 +75,7 @@ namespace KITWTF1
             /// <summary> Adds an relation between two people
             /// <para> Doing this by adding the connection to Person_Person table
 
-            string executeString = string.Format("INSERT INTO Student29.dbo.Person_Person VALUES ('{0}', {1}, {2}, {3})",
-                                                                                                                    Alias,
-                                                                                                                    PersonID,
-                                                                                                                    ContactID,
-                                                                                                                    RemainingTime);
+            string executeString = string.Format("INSERT INTO Student29.dbo.Person_Person (Alias, PersonID, ContactID, RemainingTime) VALUES ('{0}', {1}, {2}, {3})", Alias, PersonID, ContactID, RemainingTime);
             Person_PersonTable.SendQuery(executeString);
             Debug.WriteLine("Successfully sent: " + executeString);
         }
@@ -159,6 +160,7 @@ namespace KITWTF1
             /// <summary> Outputs an list where the query is returned
             string executeString = string.Format("EXEC SelectAllPersonRelation @Id = {0}", id);
             var query = Person_PersonTable.SendAndGetQuery(executeString);
+            
             return query.AsList();
         }
 
@@ -170,7 +172,7 @@ namespace KITWTF1
         public List<LoginDetailsTable> getData(string Username)
         {
             /// <summary> Returns Username, UserPassword, Email, PhoneNumber as a array for the matching Username
-            string executeString = string.Format("EXEC SearchForUsername @Username = {0}", Username);
+            string executeString = string.Format("EXEC SearchForUsername @Username = '{0}'", Username);
             var query = LoginDetailsTable.SendAndGetQuery(executeString);
             return query.AsList();
         }
@@ -186,12 +188,12 @@ namespace KITWTF1
             }
             return 0;
         }
-        public int GetIdentity()//Returns the ID of the latest submission to the DB
+        public int GetIdentity() //Returns the ID of the latest submission to the DB
         {
             string connectionString = "server=40.85.84.155;Database=student29;User Id=student29;Password=YH-student@2019";
             SqlConnection connection = new SqlConnection(connectionString);
 
-            string executeString = string.Format("SELECT CAST(SCOPE_IDENTITY() as int) FROM Student29.dbo.Person");
+            string executeString = string.Format("SELECT Max(PersonID) FROM Student29.dbo.Person");
 
                 using (connection)
                 {
@@ -208,14 +210,11 @@ namespace KITWTF1
 
         public int GetRemainingTime(int PersonID, int ContactID)
         {
-            string executeString = string.Format("SELECT RemainingTime FROM Student29.dbo.Person_Person WHERE PersonID = {0} AND ContactID = {1]", PersonID, ContactID);
+        string executeString = string.Format("SELECT RemainingTime FROM Student29.dbo.Person_Person WHERE PersonID = {0} AND ContactID = {1}", PersonID, ContactID);
             var query = Person_PersonTable.SendAndGetQuery(executeString);
             
-            foreach (var item in query)
-            {
-                return item.RemainingTime;
-            }
-            return 0;
+            return query.AsList()[0].RemainingTime;
+            
         }
     }
 

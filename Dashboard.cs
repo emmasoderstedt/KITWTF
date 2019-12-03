@@ -48,6 +48,7 @@ namespace KITWTF1
                                     int userFriendID;
                                     Console.WriteLine("Skriv in din väns användarnamn: ");
                                     string friendUsername = Console.ReadLine();
+
                                     userFriendID = DBHandler.GetID(friendUsername);
                                     if (userFriendID != 0)
                                     {
@@ -69,15 +70,15 @@ namespace KITWTF1
 
                             case 1: //Lägg till användare (utan konto)
 
-                                User newUser = new User();
+                                
 
                                 Console.Write("Skriv in personens namn:");
-                                newUser.Name = Console.ReadLine();
+                                string Name = Console.ReadLine();
 
-                                Console.Write("Skriv in telefonnummer: ");
-                                newUser.Phonenumber = Console.ReadLine();
+                                // Console.Write("Skriv in telefonnummer: ");
+                                // newUser.Phonenumber = Console.ReadLine();
 
-                                DBHandler.AddUser(newUser);
+                                DBHandler.AddPerson(Name);                                
                                 int friendID = DBHandler.GetIdentity();
 
                                 Console.Write("Skriv in namn på relationen: ");
@@ -85,6 +86,10 @@ namespace KITWTF1
 
                                 Console.Write("Hur ofta vill du kontakta denna personen? ");
                                 int contactTime = Console.Read();
+                                Console.WriteLine("User id: " + userID);
+                                Console.WriteLine("Friend id: " + friendID);
+
+
 
                                 DBHandler.AddRelation(relationName, userID, friendID, contactTime);
 

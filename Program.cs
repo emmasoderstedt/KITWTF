@@ -46,7 +46,6 @@ namespace KITWTF1
 
                                 bool loggedIn = dbHandler.LoginUsername(username, password);//om godkänt skicka koden vidare till Dashboard.cs
                                 if (loggedIn){
-                                    int userID = dbHandler.GetID(username);
                                     Dashboard dashboard = new Dashboard();
                                     int ID = dbHandler.GetID(username);
                                     dashboard.dashboard(ID);
