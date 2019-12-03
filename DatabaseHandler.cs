@@ -22,7 +22,7 @@ namespace KITWTF1
             };
             // Add user to the Person table
             AddUserToDatabase(personTemplate);
-            GetID(personTemplate.Name)
+            GetID(personTemplate.Name);
 
             // Creates and assign values
             LoginDetailsTable LoginDetailsTemplate = new LoginDetailsTable()
@@ -275,6 +275,9 @@ namespace KITWTF1
         public string Alias { get; set; }
         public int ContactID { get; set; }
         public int RemainingTime { get; set; }
+
+        public string PersonName { get; set;}
+
         public static void SendQuery(string ExecuteString)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -289,6 +292,10 @@ namespace KITWTF1
                 var query = connection.Query<Person_PersonTable>(ExecuteString);
                 return query;
             }
+        }
+        public override string ToString()
+        {
+            return  Alias+ " \n"+PersonName+ " \n"+RemainingTime;
         }
     }
 }
