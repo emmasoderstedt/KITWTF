@@ -15,20 +15,25 @@ namespace KITWTF1
                 DatabaseHandler DBHandler = new DatabaseHandler();
                 var dashboardMenu = new Menu(dashboardContent);
                 dashboardMenu = dashboardMenu.GetMenu(dashboardMenu, dashboardHeader);
-                switch (dashboardMenu.SelectedIndex) //dasboard menu
+                switch (dashboardMenu.SelectedIndex)
                 {
                     case 0: //se kontakter 
                         List<Person_PersonTable> relations = new List<Person_PersonTable>();
                         relations = DBHandler.ListRelation(userID);
-
+                        List <LoginDetailsTable> dataList = new List<LoginDetailsTable>();
                         
-
                         foreach (var relation in relations)
                         {
+
                             Console.WriteLine("Namn på relation: " + relation.Alias);
                             Console.WriteLine("Tid kvar: " + DBHandler.GetRemainingTime(userID, relation.ContactID));
                             Console.WriteLine("--------------------------------------");
                         }
+                        // foreach(var data in dataList){   //behöver hämta namn and shit but no work
+                        //     Console.WriteLine(data);
+                        //     Console.WriteLine("----------------------");
+                        //     Console.ReadKey();
+                        // }
                         Console.ReadKey();
                         break;
 
@@ -59,6 +64,7 @@ namespace KITWTF1
                                         int remaningTime = Console.Read();
 
                                         DBHandler.AddRelation(alias, userID, userFriendID, remaningTime);
+                                        break;
                                     }
                                     else
                                     {

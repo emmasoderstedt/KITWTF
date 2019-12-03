@@ -165,14 +165,9 @@ namespace KITWTF1
         }
 
         /* --------------------------------- Search --------------------------------- */
-        public List<string> GetInfo (string Username){//gets trimmed down info
-            getData(Username);
-            List <string> relationInfo = new List <string> ();
-            return relationInfo;
-        }
         public List<LoginDetailsTable> getData(string Username)
         {
-            /// <summary> Returns Username, UserPassword, Email, PhoneNumber as a array for the matching Username
+            /// <summary> Returns Username, UserPassword, Email, PhoneNumber as a list for the matching Username
             string executeString = string.Format("EXEC SearchForUsername @Username = '{0}'", Username);
             var query = LoginDetailsTable.SendAndGetQuery(executeString);
             return query.AsList();
