@@ -9,6 +9,8 @@ namespace KITWTF1
     {
         static int PersonID;
 
+       public static string userName;
+
         /* -------------------------------- Add User -------------------------------- */
         public void AddUser(User user)
         {
@@ -163,7 +165,7 @@ namespace KITWTF1
         public void GetInfo (){//gets trimmed down info
             
         }
-        private List<LoginDetailsTable> getData(string Username)
+        public List<LoginDetailsTable> getData(string Username)
         {
             /// <summary> Returns Username, UserPassword, Email, PhoneNumber as a array for the matching Username
             string executeString = string.Format("EXEC SearchForUsername @Username = {0}", Username);

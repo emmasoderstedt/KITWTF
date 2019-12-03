@@ -33,17 +33,18 @@ namespace KITWTF1.Pages
                try
                { 
                         DatabaseHandler dbh = new DatabaseHandler();
-                        dbh.LoginUsername(email,password);
-                                            if(id!=0)
+                       
+                                            if(dbh.LoginUsername(email,password))
                                             {
+                                                    DatabaseHandler.userName = email; 
                                                      return Redirect("/LoggedIn?id="+id);
                                             }                                 
-                                            return Redirect("/Index?Error=fel"+id);
+                                           return null;
                     
                }
                catch (System.Exception)
                {             
-                   return Redirect("/Index?Error=fel"+id);
+                 return null;
                }
         }
     }

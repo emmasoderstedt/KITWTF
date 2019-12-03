@@ -16,28 +16,24 @@ namespace KITWTF1.Pages
         public string friend { get; set; }
         public string userLogged { get; set; }
 
-
-        public IActionResult OnGet(int? id=null)
+        public List<Person_PersonTable> personList = new List<Person_PersonTable>();
+        public void OnGet(int? id=null)
         {
 
             try
             {
-                string connectionString="server=40.85.84.155;Database=student8;User Id=student8;Password=YH-student@2019";
-                 using (SqlConnection connection = new SqlConnection(connectionString))
-                 {       
+                DatabaseHandler dbhandler = new DatabaseHandler();
+               
+                dbhandler.getData(DatabaseHandler.userName);
+                
+                personList = dbhandler.ListRelation(dbhandler.GetID(DatabaseHandler.userName));
 
- 
-                                            if(userLogged==null)
-                                            {
-                                                     return Redirect("/Index?Error=fel"); 
-                                            }                   
-                                          return null;                     
-                 }
+
             }
             catch (System.Exception)
             {
                 
-               return Redirect("/Index?Error=fel"); 
+              
             }
                 
         }

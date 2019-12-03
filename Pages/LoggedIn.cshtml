@@ -18,17 +18,18 @@
 
     
 @Model.friend
-@foreach(var item in Model.friends)
+@foreach (var item in Model.personList)
 {
-            <div class="text-left">           
-            <li>      
-                "Släktingens namn: " @item.friendsId                
-            </li>
-            <li>
-                "Släkt Typ: " @item.myRelative
-            </li>
-            </div>
+    
+    <li>
+    @item.Alias;
+    </li>
+    <li>
+     @item.PersonID;
+    </li>
 }
+
+
 
 
 
