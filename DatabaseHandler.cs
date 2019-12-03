@@ -162,8 +162,9 @@ namespace KITWTF1
         }
 
         /* --------------------------------- Search --------------------------------- */
-        public void GetInfo (){//gets trimmed down info
-            
+        public void GetInfo (string Username){//gets trimmed down info
+            List <string> tooMuchInfo = new List<string>();
+            getData(Username);
         }
         public List<LoginDetailsTable> getData(string Username)
         {

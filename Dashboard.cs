@@ -20,12 +20,13 @@ namespace KITWTF1
                     case 0: //se kontakter 
                         List<Person_PersonTable> relations = new List<Person_PersonTable>();
                         relations = DBHandler.ListRelation(userID);
+
                         
 
                         foreach (var relation in relations)
                         {
-                            Console.WriteLine("Namn: " + relation.Alias);
-                            Console.WriteLine("Tid kvar: " + relation.RemainingTime);
+                            Console.WriteLine("Namn på relation: " + relation.Alias);
+                            Console.WriteLine("Tid kvar: " + DBHandler.GetRemainingTime(userID, relation.ContactID));
                             Console.WriteLine("--------------------------------------");
                         }
                         Console.ReadKey();
