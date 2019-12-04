@@ -56,10 +56,6 @@ namespace KITWTF1
                                     Console.WriteLine("Felaktigt lösenord eller användarnamn. \n Tryck valfri tangent för att försöka igen");
                                     Console.ReadKey();
                                 }
-
-
-
-
                                 break;
 
                             case 1: //Skapa nytt konto
@@ -85,6 +81,7 @@ namespace KITWTF1
                                     dbHandler.AddUser(newUser);
                                 }catch{
                                     Console.WriteLine("Ange endast siffror i telefonnummer.");
+                                    Console.Read();
                                 }
 
 
