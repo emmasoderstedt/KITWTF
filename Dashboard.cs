@@ -65,10 +65,10 @@ namespace KITWTF1
                                     else
                                     {
                                         Console.WriteLine("Angivet användarnamn finnns ej registrerat.");
-                                        break;
+                                        Console.ReadLine();
                                     }
                                 }
-                                break;
+                            break;
 
                             case 1: //Lägg till användare (utan konto)
                                 Console.Write("Skriv in personens namn:");
