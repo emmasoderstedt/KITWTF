@@ -20,20 +20,14 @@ namespace KITWTF1
                     case 0: //se kontakter 
                         List<Person_PersonTable> relations = new List<Person_PersonTable>();
                         relations = DBHandler.ListRelation(userID);
-                        List <LoginDetailsTable> dataList = new List<LoginDetailsTable>();
-                        
+
                         foreach (var relation in relations)
                         {
-
+                            Console.WriteLine("Namn: " + relation.PersonName);
                             Console.WriteLine("Namn på relation: " + relation.Alias);
-                            Console.WriteLine("Tid kvar: " + DBHandler.GetRemainingTime(userID, relation.ContactID));
+                            Console.WriteLine("Tid kvar: " + DBHandler.GetRemainingTime(userID, relation.ContactID) + " dagar");
                             Console.WriteLine("--------------------------------------");
                         }
-                        // foreach(var data in dataList){   //behöver hämta namn and shit but no work
-                        //     Console.WriteLine(data);
-                        //     Console.WriteLine("----------------------");
-                        //     Console.ReadKey();
-                        // }
                         Console.ReadKey();
                         break;
 
@@ -65,6 +59,7 @@ namespace KITWTF1
                                         int RemaningTime = Convert.ToInt32(remaningTime);
 
                                         DBHandler.AddRelation(alias, userID, userFriendID, RemaningTime);
+                                        Console.WriteLine("Kontakten är tillagd!");
                                         break;
                                     }
                                     else
@@ -76,40 +71,47 @@ namespace KITWTF1
                                 break;
 
                             case 1: //Lägg till användare (utan konto)
-
-                                
-
                                 Console.Write("Skriv in personens namn:");
                                 string Name = Console.ReadLine();
 
                                 // Console.Write("Skriv in telefonnummer: ");
                                 // newUser.Phonenumber = Console.ReadLine();
 
-                                DBHandler.AddPerson(Name);                                
+                                DBHandler.AddPerson(Name);
                                 int friendID = DBHandler.GetIdentity();
 
                                 Console.Write("Skriv in namn på relationen: ");
                                 string relationName = Console.ReadLine();
 
-                                Console.Write("Hur ofta vill du kontakta denna personen? ");
-                                int contactTime = Console.Read();
+                                Console.Write("Antal dagar mellan kontakt:");
+                                int contactTime = 0;
+                                bool exitLoop = true;
+                                while (exitLoop)
+                                {
+                                    try
+                                    {
+                                        contactTime = Convert.ToInt32(Console.ReadLine());
+                                        exitLoop = false;
+                                    }
+                                    catch
+                                    {
+                                        Console.WriteLine("Enbart siffor");
+                                    }
+                                }
                                 Console.WriteLine("User id: " + userID);
                                 Console.WriteLine("Friend id: " + friendID);
 
-
-
                                 DBHandler.AddRelation(relationName, userID, friendID, contactTime);
+                                Console.WriteLine("Kontakten är tillagd!");
 
                                 break;
                         }
-
                         break;
                     case 2:
-                        {
-                            Console.WriteLine("Tack för idag!");
-                            return;
-                        }
+                        Console.WriteLine("Tack för idag!");
+                        return;
                 }
+
             }
         }
 
