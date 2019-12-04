@@ -1,7 +1,7 @@
-using Dapper;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
+using System.Collections.Generic;
+using System.Linq;
+using Dapper;
 using System.Data.SqlClient;
 
 namespace KITWTF1
@@ -111,7 +111,7 @@ namespace KITWTF1
                 Username,
                 Password);
             var query = LoginDetailsTable.SendAndGetQuery(executeString);
-            LoginDetailsTable[] queryArray = query.AsList().ToArray();
+            LoginDetailsTable[] queryArray = query.ToArray();
             
             return isCorrectCredentials(queryArray);
         }
@@ -123,7 +123,7 @@ namespace KITWTF1
                 Email,
                 Password);
             var query = LoginDetailsTable.SendAndGetQuery(executeString);
-            LoginDetailsTable[] queryArray = query.AsList().ToArray();
+            LoginDetailsTable[] queryArray = query.ToArray();
 
             return isCorrectCredentials(queryArray);
         }
@@ -159,7 +159,7 @@ namespace KITWTF1
             string executeString = string.Format("EXEC SelectAllPersonRelation @Id = {0}", id);
             var query = Person_PersonTable.SendAndGetQuery(executeString);
 
-            return query.AsList();
+            return query.ToList();
         }
         /* -------------------------------- Get Data -------------------------------- */
         public List<LoginDetailsTable> getData(string Username)
@@ -168,7 +168,7 @@ namespace KITWTF1
             string executeString = string.Format("EXEC SearchForUsername @Username = '{0}'", Username);
             var query = LoginDetailsTable.SendAndGetQuery(executeString);
 
-            return query.AsList();
+            return query.ToList();
         }
         /* --------------------------------- Search --------------------------------- */
         public int GetID(string Username)
@@ -262,7 +262,6 @@ namespace KITWTF1
         public string Alias { get; set; }
         public int ContactID { get; set; }
         public int RemainingTime { get; set; }
-
         public string PersonName { get; set;}
 
         public static void SendQuery(string ExecuteString)

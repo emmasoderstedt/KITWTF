@@ -13,22 +13,14 @@ namespace KITWTF1
             while (true)
             {
                 DatabaseHandler DBHandler = new DatabaseHandler();
+
                 var dashboardMenu = new Menu(dashboardContent);
                 dashboardMenu = dashboardMenu.GetMenu(dashboardMenu, dashboardHeader);
+
                 switch (dashboardMenu.SelectedIndex)
                 {
                     case 0: //se kontakter 
-                        List<Person_PersonTable> relations = new List<Person_PersonTable>();
-                        relations = DBHandler.ListRelation(userID);
-
-                        foreach (var relation in relations)
-                        {
-                            Console.WriteLine("Namn: " + relation.PersonName);
-                            Console.WriteLine("Namn på relation: " + relation.Alias);
-                            Console.WriteLine("Tid kvar: " + DBHandler.GetRemainingTime(userID, relation.ContactID) + " dagar");
-                            Console.WriteLine("--------------------------------------");
-                        }
-                        Console.ReadKey();
+                        OutputContactList(DBHandler.ListRelation(userID));
                         break;
 
                     case 1:  //lägg till kontakt
@@ -113,6 +105,19 @@ namespace KITWTF1
                 }
 
             }
+        }
+        public static void OutputContactList(List<Person_PersonTable> relations)
+        {
+            foreach (var relation in relations)
+            {
+                Console.WriteLine();
+                Console.WriteLine("--------------------------------------");
+                Console.WriteLine("Namn: " + relation.PersonName);
+                Console.WriteLine("Namn på relation: " + relation.Alias);
+                Console.WriteLine("Tid kvar: " + relation.RemainingTime + " dagar");
+                Console.WriteLine("--------------------------------------");
+            }
+            Console.ReadKey();
         }
 
     }
