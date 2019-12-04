@@ -83,8 +83,6 @@ namespace KITWTF1
                                     Console.WriteLine("Ange endast siffror i telefonnummer.");
                                     Console.Read();
                                 }
-
-
                                 break;
                         }
                         break;

@@ -21,6 +21,7 @@ namespace KITWTF1
                 {
                     case 0: //se kontakter 
                         OutputContactList(DBHandler.ListRelation(userID));
+                        Console.WriteLine("\nTryck valfri tangent för att gå vidare");
                         break;
 
                     case 1:  //lägg till kontakt
@@ -52,6 +53,8 @@ namespace KITWTF1
 
                                         DBHandler.AddRelation(alias, userID, userFriendID, RemaningTime);
                                         Console.WriteLine("Kontakten är tillagd!");
+                                        Console.WriteLine("\nTryck valfri tangent för att gå vidare");
+                                        Console.ReadKey();
                                         break;
                                     }
                                     else
@@ -111,12 +114,12 @@ namespace KITWTF1
             foreach (var relation in relations)
             {
                 Console.WriteLine();
-                Console.WriteLine("--------------------------------------");
                 Console.WriteLine("Namn: " + relation.PersonName);
                 Console.WriteLine("Namn på relation: " + relation.Alias);
                 Console.WriteLine("Tid kvar: " + relation.RemainingTime + " dagar");
                 Console.WriteLine("--------------------------------------");
             }
+            Console.WriteLine("\nTryck valfri tangent för att gå vidare");
             Console.ReadKey();
         }
 
