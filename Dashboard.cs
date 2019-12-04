@@ -61,9 +61,10 @@ namespace KITWTF1
                                         string alias = Console.ReadLine();
 
                                         Console.WriteLine("Skriv in antal dagar du ska ha på dig att kontakta personen: ");
-                                        int remaningTime = Console.Read();
+                                        string remaningTime = Console.ReadLine();
+                                        int RemaningTime = Convert.ToInt32(remaningTime);
 
-                                        DBHandler.AddRelation(alias, userID, userFriendID, remaningTime);
+                                        DBHandler.AddRelation(alias, userID, userFriendID, RemaningTime);
                                         break;
                                     }
                                     else
