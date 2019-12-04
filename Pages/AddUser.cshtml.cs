@@ -32,7 +32,7 @@ namespace KITWTF1.Pages
         }
         
       
-        public void OnPost(string name,string email,string Username,string Userpassword, string PhoneNumber )
+        public IActionResult OnPost(string name,string email,string Username,string Userpassword, string PhoneNumber )
         {
                try
                { 
@@ -47,12 +47,12 @@ namespace KITWTF1.Pages
                    //.AddUser(name,email,Username,UserPassword,PhoneNumber);
 
                    dbt.AddUser(user);
-                  
+                   return Redirect("/Index");
 
                }
                catch (System.Exception)
                {             
-            
+                        return Redirect("/Index");
                }
         }
     }

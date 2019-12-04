@@ -5,40 +5,53 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
 
-    
-            <li>
-                <h1 class="display-5">"Välkommen: " @Model.userLogged</h1>
-             
-            </li>         
-
-
-</div>
-
-
-    
-@Model.friend
+        <div class="row">
+    <div class="col-2 text-white float-left" 
+    >Meny
+        <ul class="list-group text-dark" >
 @foreach (var item in Model.personList)
-{
+{   
     
-    <li>
-   Namn: @item.PersonName
- 
-   
-   Alias: @item.Alias
-    
-    
- 
-    "Dagar kvar: " @item.RemainingTime
-    </li>
-    <br>
-    <br>
+    <li class="list-group-item">
+     @item.PersonName 
+    <br> <br>
+     @item.Alias
+    <br> <br>
+     @item.RemainingTime
+       <br> <br>
+     <button type="submit" class="btn btn-primary" >Kontakta</button>
 
-    
+    </li>
+  
 }
 
+</ul>
+  
+</div>
+    <div class="col-10">
+        
+<div class="text-center">
+    <blockquote class="blockquote">
+  <p class="mb-0"> <h1 class="text-white">K.I.T.W.T.F </h1> </p>
+  <footer class="blockquote-footer text-white" >Keep In Touch With The Family <cite title="Source Title">Fktup Youth 2019</cite></footer>
+</blockquote>
+               
+                         
 
+@Model.friend
+
+     
+    </div>
+
+@section Scripts
+{
+    <script>
+        $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+    </script>
+}
 
 
 

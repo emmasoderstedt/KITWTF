@@ -24,12 +24,12 @@ namespace KITWTF1.Pages
             {
                 DatabaseHandler dbhandler = new DatabaseHandler();
                
-                dbhandler.getData(DatabaseHandler.userName);
+                //dbhandler.getData(DatabaseHandler.userName);
                 
                 personList = dbhandler.ListRelation(dbhandler.GetID(DatabaseHandler.userName));
-                foreach (var item in personList)
+                ///foreach (var item in personList)
                 {
-                    dbhandler.GetRemainingTime(dbhandler.GetID(DatabaseHandler.userName), item.ContactID);
+                   // dbhandler.GetRemainingTime(dbhandler.GetID(DatabaseHandler.userName), item.ContactID);
                 }
                 
 

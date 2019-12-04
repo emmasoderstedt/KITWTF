@@ -5,14 +5,14 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Skapa Användare</h1>
+    <h1 class="display-4 text-white">Skapa Användare</h1>
     
 
 </div>
 
 <form asp-action = "Index">
   <div class="form-group">
-    <label for="email">Email address</label>
+    <label for="email" class="text-white">Email address</label>
     <input  asp-for="email" type="email" class="form-control" placeholder="Ange email"/>
     
 
@@ -22,26 +22,26 @@
 
   </div>
 <div class="form-group">
-    <label for="username">Användarnamn</label>
+    <label for="username" class="text-white">Användarnamn</label>
     <input  asp-for="Username" type="text" class="form-control" placeholder="Ange användarnamn"/>
     
   </div>
 
 
   <div class="form-group">
-    <label for="password">Lösenord</label>
+    <label for="password" class="text-white">Lösenord</label>
     <input asp-for="UserPassword" type="password" class="form-control" placeholder="Lösenord" />
   </div>
 
   <div class="form-group">
-    <label for="text">Telefonnummer</label>
-    <input  asp-for="PhoneNumber" type="text" class="form-control" placeholder="Ange telefonnumer"/>
+    <label for="text" class="text-white">Telefonnummer</label>
+    <input  asp-for="PhoneNumber" type="text" class="form-control " placeholder="Ange telefonnumer"/>
     
   </div>
   
   
  
-  <button type="submit" class="btn btn-primary" >Logga in</button>
+  <button type="submit" class="btn btn-primary" >Skapa Användare</button>
 
   <!--button type="submit" class="btn btn-primary" >Logga in</button>
   -->

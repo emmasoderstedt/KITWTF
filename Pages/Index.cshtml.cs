@@ -12,12 +12,10 @@ namespace KITWTF1.Pages
 {
     public class IndexModel : PageModel
     {
-        public string email {get; set;}
-        
+        public string email {get; set;}    
         public string Username { get; set; }
         public string password {get;set;}
         public int id {get;set;}
-
         public string nameTest { get; set; }
 
       
@@ -25,7 +23,6 @@ namespace KITWTF1.Pages
         public void OnGet()
         {
                 //nameTest = HttpContext.Session.GetString(SessionKeyName);
-     
         }
         
         public IActionResult OnPost(string email,string password)
@@ -39,8 +36,7 @@ namespace KITWTF1.Pages
                                                     DatabaseHandler.userName = email; 
                                                      return Redirect("/LoggedIn?id="+id);
                                             }                                 
-                                           return null;
-                    
+                                           return null;   
                }
                catch (System.Exception)
                {             
