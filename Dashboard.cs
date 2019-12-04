@@ -20,7 +20,7 @@ namespace KITWTF1
                     case 0: //se kontakter 
                         List<Person_PersonTable> relations = new List<Person_PersonTable>();
                         relations = DBHandler.ListRelation(userID);
-                        
+
                         foreach (var relation in relations)
                         {
                             Console.WriteLine("Namn: " + relation.PersonName);
@@ -77,7 +77,7 @@ namespace KITWTF1
                                 // Console.Write("Skriv in telefonnummer: ");
                                 // newUser.Phonenumber = Console.ReadLine();
 
-                                DBHandler.AddPerson(Name);                                
+                                DBHandler.AddPerson(Name);
                                 int friendID = DBHandler.GetIdentity();
 
                                 Console.Write("Skriv in namn på relationen: ");
@@ -86,9 +86,10 @@ namespace KITWTF1
                                 Console.Write("Antal dagar mellan kontakt:");
                                 int contactTime = 0;
                                 bool exitLoop = true;
-                                while(exitLoop)
+                                while (exitLoop)
                                 {
-                                    try{
+                                    try
+                                    {
                                         contactTime = Convert.ToInt32(Console.ReadLine());
                                         exitLoop = false;
                                     }
@@ -105,12 +106,12 @@ namespace KITWTF1
 
                                 break;
                         }
-
-                        break;     
+                        break;
+                    case 2:
+                        Console.WriteLine("Tack för idag!");
+                        return;
                 }
 
-                Console.WriteLine("Tack för idag!");
-                return;
             }
         }
 
