@@ -4,32 +4,46 @@
     ViewData["Title"] = "Home page";
 }
 
+
+
+
+
+
+
+
+<!--------------------------------------------------------------------------------------------------------------------->
+
 <div class="text-center">
     <h1 class="display-4">Välkommen till KITWTF</h1>
     
 
-</div>
+
+
+
+
+
+
+
+<div id="fullscreen_bg" class="fullscreen_bg"/>
 
 <form asp-action = "Index">
   <div class="form-group">
     <label for="email">Email address</label>
     <input  asp-for="email" type="text" class="form-control" placeholder="Ange email"/>
-    
   </div>
+
   <div class="form-group">
     <label for="password">Lösenord</label>
     <input asp-for="password" type="password" class="form-control" placeholder="Lösenord" />
   </div>
-  
-  
- 
   <button type="submit" class="btn btn-primary" >Logga in</button>   <a class="btn btn-primary" href="/AddUser" role="button">Skapa Användare</a>
-
+</div>
   <!--button type="submit" class="btn btn-primary" >Logga in</button>
   -->
+	</form>
+</div>
 
-  </form>
- 
+
 
   
   

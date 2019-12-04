@@ -1,4 +1,5 @@
 using Dapper;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Data.SqlClient;
@@ -7,8 +8,7 @@ namespace KITWTF1
 {
     public class DatabaseHandler
     {
-       public static string userName;
-
+        public static string userName;
         /* -------------------------------- Add User -------------------------------- */
         public void AddUser(User user)
         {
@@ -20,7 +20,7 @@ namespace KITWTF1
             };
             // Add user to the Person table
             AddUserToDatabase(personTemplate);
-            
+
             int personID = GetID(personTemplate.Name);
 
             // Creates and assign values
@@ -35,7 +35,6 @@ namespace KITWTF1
             // Add user to the LoginDetails table
             AddUserToDatabase(LoginDetailsTemplate);
         }
-
         public void AddPerson(string Name)
         {
             string executeString = string.Format("INSERT INTO Person (PersonName) VALUES ('{0}')", Name);
@@ -67,9 +66,7 @@ namespace KITWTF1
                 Debug.WriteLine("PersonID: " + items.PersonID);
             }
         }
-
         /* ------------------------------ Add Relation ------------------------------ */
-        
         public void AddRelation(string Alias, int PersonID, int ContactID, int RemainingTime)
         {
             /// <summary> Adds an relation between two people
@@ -115,8 +112,9 @@ namespace KITWTF1
                 Password);
             var query = LoginDetailsTable.SendAndGetQuery(executeString);
             LoginDetailsTable[] queryArray = query.AsList().ToArray();
+            
             return isCorrectCredentials(queryArray);
-        }   
+        }
         public bool LoginEmail(string Email, string Password)
         {
             /// <summary> Allows login with Email/Password combination
@@ -126,6 +124,7 @@ namespace KITWTF1
                 Password);
             var query = LoginDetailsTable.SendAndGetQuery(executeString);
             LoginDetailsTable[] queryArray = query.AsList().ToArray();
+
             return isCorrectCredentials(queryArray);
         }
         private bool isCorrectCredentials(LoginDetailsTable[] queryArray)
@@ -153,25 +152,25 @@ namespace KITWTF1
                 return false;
             }
         }
-
         /* ------------------------------ List Relation ----------------------------- */
         public List<Person_PersonTable> ListRelation(int id)
         {
             /// <summary> Outputs an list where the query is returned
             string executeString = string.Format("EXEC SelectAllPersonRelation @Id = {0}", id);
             var query = Person_PersonTable.SendAndGetQuery(executeString);
-            
+
             return query.AsList();
         }
-
-        /* --------------------------------- Search --------------------------------- */
+        /* -------------------------------- Get Data -------------------------------- */
         public List<LoginDetailsTable> getData(string Username)
         {
             /// <summary> Returns Username, UserPassword, Email, PhoneNumber as a list for the matching Username
             string executeString = string.Format("EXEC SearchForUsername @Username = '{0}'", Username);
             var query = LoginDetailsTable.SendAndGetQuery(executeString);
+
             return query.AsList();
         }
+        /* --------------------------------- Search --------------------------------- */
         public int GetID(string Username)
         {   /// <summary> Returns the ID of the matching Username combination
             string executeString = string.Format("EXEC GetID @Username = '{0}'", Username);
@@ -184,57 +183,50 @@ namespace KITWTF1
             }
             return 0;
         }
-        public int GetIdentity() //Returns the ID of the latest submission to the DB
-        {
+        public int GetIdentity()
+        {   /// <summary> Returns the ID of the latest submission to the DB
             string connectionString = "server=40.85.84.155;Database=student29;User Id=student29;Password=YH-student@2019";
             SqlConnection connection = new SqlConnection(connectionString);
 
             string executeString = string.Format("SELECT Max(PersonID) FROM Student29.dbo.Person");
-
-                using (connection)
-                {
-                    return connection.ExecuteScalar<int>(executeString);
-                }
+            using (connection)
+            {
+                return connection.ExecuteScalar<int>(executeString);
+            }
         }
-
-    /* ------------------------ Change Remaining Time ------------------------ */
+        /* ------------------------ Change Remaining Time ------------------------ */
         public void ChangeRemainingTime(int PersonID)
         {
             string executeString = string.Format("UPDATE Student29.dbo.Person_Person SET RemainingTime =- 1", PersonID);
             Person_PersonTable.SendQuery(executeString);
         }
-
         public int GetRemainingTime(int PersonID, int ContactID)
         {
-        string executeString = string.Format("SELECT RemainingTime FROM Student29.dbo.Person_Person WHERE PersonID = {0} AND ContactID = {1}", PersonID, ContactID);
+            string executeString = string.Format("SELECT RemainingTime FROM Student29.dbo.Person_Person WHERE PersonID = {0} AND ContactID = {1}", PersonID, ContactID);
             var query = Person_PersonTable.SendAndGetQuery(executeString);
-            
+
             return query.AsList()[0].RemainingTime;
-            
         }
     }
-
     /* --------------------------------- Tables --------------------------------- */
-
-   public class DatabaseTable
+    public class DatabaseTable
     {
         internal static string connectionString = @"server=40.85.84.155;Database=student29;User Id=student29;Password=YH-student@2019";
-        // internal static SqlConnection connection = new SqlConnection(connectionString);
         public int PersonID { get; set; }
     }
     class PersonTable : DatabaseTable
     {
         public string Name { get; set; }
+        public string PhoneNumber { get; set; }
         public static void SendQuery(string ExecuteString)
-        {
+        { /// <summary> Sends the ExecuteString as a sql statement to the database
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Query<PersonTable>(ExecuteString);
-                
             }
         }
         public static IEnumerable<PersonTable> SendAndGetQuery(string ExecuteString)
-        {
+        { /// <summary> Sends the ExecuteString as a sql statement to the database and returns the query
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 var query = connection.Query<PersonTable>(ExecuteString);
@@ -242,21 +234,21 @@ namespace KITWTF1
             }
         }
     }
-     public class LoginDetailsTable : DatabaseTable
+    public class LoginDetailsTable : DatabaseTable
     {
         public string Username { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
         public string Phonenumber { get; set; }
         public static void SendQuery(string ExecuteString)
-        {
+        { /// <summary> Sends the ExecuteString as a sql statement to the database
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Query<LoginDetailsTable>(ExecuteString);
             }
         }
         public static IEnumerable<LoginDetailsTable> SendAndGetQuery(string ExecuteString)
-        {
+        { /// <summary> Sends the ExecuteString as a sql statement to the database and returns the query
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 var query = connection.Query<LoginDetailsTable>(ExecuteString);
@@ -264,26 +256,30 @@ namespace KITWTF1
             }
         }
     }
-     public class Person_PersonTable : DatabaseTable
+    public class Person_PersonTable : DatabaseTable
     {
         public int RelationID { get; set; }
         public string Alias { get; set; }
         public int ContactID { get; set; }
         public int RemainingTime { get; set; }
+
+        public string PersonName { get; set;}
+
         public static void SendQuery(string ExecuteString)
-        {
+        { /// <summary> Sends the ExecuteString as a sql statement to the database
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Query<Person_PersonTable>(ExecuteString);
             }
         }
         public static IEnumerable<Person_PersonTable> SendAndGetQuery(string ExecuteString)
-        {
+        { /// <summary> Sends the ExecuteString as a sql statement to the database and returns the query
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 var query = connection.Query<Person_PersonTable>(ExecuteString);
                 return query;
             }
         }
+        
     }
 }

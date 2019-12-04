@@ -1,4 +1,5 @@
-﻿@page
+﻿
+@page
 @model LoggedInModel
 @{
     ViewData["Title"] = "Home page";
@@ -22,11 +23,19 @@
 {
     
     <li>
-    @item.Alias;
+   Namn: @item.PersonName
+ 
+   
+   Alias: @item.Alias
+    
+    
+ 
+    "Dagar kvar: " @item.RemainingTime
     </li>
-    <li>
-     @item.PersonID;
-    </li>
+    <br>
+    <br>
+
+    
 }
 
 
