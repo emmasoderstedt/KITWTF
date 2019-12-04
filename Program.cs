@@ -9,7 +9,7 @@ namespace KITWTF1
     public class Program
     {
         public static void Main(string[] args)
-        {
+        {   bool loop = true;
             DatabaseHandler dbHandler = new DatabaseHandler();
 
             Debug.WriteLine(dbHandler.GetIdentity());
@@ -19,12 +19,13 @@ namespace KITWTF1
 
             var startMenu = new Menu(startMenuContent);
             startMenu = startMenu.GetMenu(startMenu, startMenuHeader);
-            while (true)
+            while (loop)
             {
                 switch (startMenu.SelectedIndex)
                 {
                     case 0: //Starta webserver
                         CreateWebHostBuilder(args).Build().Run();
+                        loop = false;
                         break;
                     case 1:  //Starta konsollapp
 

@@ -292,9 +292,6 @@ namespace KITWTF1
                 return query;
             }
         }
-        public override string ToString()
-        {
-            return  Alias+ " \n"+PersonName+ " \n"+RemainingTime;
-        }
+        
     }
 }

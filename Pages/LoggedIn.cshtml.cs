@@ -27,6 +27,11 @@ namespace KITWTF1.Pages
                 dbhandler.getData(DatabaseHandler.userName);
                 
                 personList = dbhandler.ListRelation(dbhandler.GetID(DatabaseHandler.userName));
+                foreach (var item in personList)
+                {
+                    dbhandler.GetRemainingTime(dbhandler.GetID(DatabaseHandler.userName), item.ContactID);
+                }
+                
 
 
             }
