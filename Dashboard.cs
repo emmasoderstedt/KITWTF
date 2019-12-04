@@ -23,7 +23,7 @@ namespace KITWTF1
                         
                         foreach (var relation in relations)
                         {
-                            Console.WriteLine("Namn: " + DBHandler.GetNameFromID(relation.PersonID));
+                            Console.WriteLine("Namn: " + relation.PersonName);
                             Console.WriteLine("Namn på relation: " + relation.Alias);
                             Console.WriteLine("Tid kvar: " + DBHandler.GetRemainingTime(userID, relation.ContactID) + " dagar");
                             Console.WriteLine("--------------------------------------");

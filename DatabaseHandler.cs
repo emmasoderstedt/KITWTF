@@ -112,6 +112,7 @@ namespace KITWTF1
                 Password);
             var query = LoginDetailsTable.SendAndGetQuery(executeString);
             LoginDetailsTable[] queryArray = query.AsList().ToArray();
+            
             return isCorrectCredentials(queryArray);
         }
         public bool LoginEmail(string Email, string Password)
@@ -123,6 +124,7 @@ namespace KITWTF1
                 Password);
             var query = LoginDetailsTable.SendAndGetQuery(executeString);
             LoginDetailsTable[] queryArray = query.AsList().ToArray();
+
             return isCorrectCredentials(queryArray);
         }
         private bool isCorrectCredentials(LoginDetailsTable[] queryArray)
@@ -157,7 +159,6 @@ namespace KITWTF1
             string executeString = string.Format("EXEC SelectAllPersonRelation @Id = {0}", id);
             var query = Person_PersonTable.SendAndGetQuery(executeString);
 
-
             return query.AsList();
         }
         /* -------------------------------- Get Data -------------------------------- */
@@ -170,13 +171,6 @@ namespace KITWTF1
             return query.AsList();
         }
         /* --------------------------------- Search --------------------------------- */
-        public string GetNameFromID(int id)
-        {
-            string executeString = string.Format("SELECT PersonName FROM Student29.dbo.Person WHERE PersonID = 4946");
-            var query = PersonTable.SendAndGetQuery(executeString);
-
-            return query.AsList()[0].Name;
-        }
         public int GetID(string Username)
         {   /// <summary> Returns the ID of the matching Username combination
             string executeString = string.Format("EXEC GetID @Username = '{0}'", Username);
@@ -286,30 +280,6 @@ namespace KITWTF1
                 return query;
             }
         }
-        
-    }
-    public class Relation : DatabaseTable
-    {
-        public int ContactID;
-        public string Alias;
-        public string PersonName;
-
-        public static void SendQuery(string ExecuteString)
-        { /// <summary> Sends the ExecuteString as a sql statement to the database
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Query<Person_PersonTable>(ExecuteString);
-            }
-        }
-        public static IEnumerable<Relation> SendAndGetQuery(string ExecuteString)
-        { /// <summary> Sends the ExecuteString as a sql statement to the database and returns the query
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                var query = connection.Query<Relation>(ExecuteString);
-                return query;
-            }
-        }
-
         
     }
 }
