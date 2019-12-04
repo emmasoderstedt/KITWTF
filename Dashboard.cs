@@ -28,11 +28,6 @@ namespace KITWTF1
                             Console.WriteLine("Tid kvar: " + DBHandler.GetRemainingTime(userID, relation.ContactID) + " dagar");
                             Console.WriteLine("--------------------------------------");
                         }
-                        // foreach(var data in dataList){   //behöver hämta namn and shit but no work
-                        //     Console.WriteLine(data);
-                        //     Console.WriteLine("----------------------");
-                        //     Console.ReadKey();
-                        // }
                         Console.ReadKey();
                         break;
 
@@ -64,6 +59,7 @@ namespace KITWTF1
                                         int RemaningTime = Convert.ToInt32(remaningTime);
 
                                         DBHandler.AddRelation(alias, userID, userFriendID, RemaningTime);
+                                        Console.WriteLine("Kontakten är tillagd!");
                                         break;
                                     }
                                     else
@@ -105,17 +101,16 @@ namespace KITWTF1
                                 Console.WriteLine("Friend id: " + friendID);
 
                                 DBHandler.AddRelation(relationName, userID, friendID, contactTime);
+                                Console.WriteLine("Kontakten är tillagd!");
 
                                 break;
                         }
 
-                        break;
-                    case 2:
-                        {
-                            Console.WriteLine("Tack för idag!");
-                            return;
-                        }
+                        break;     
                 }
+
+                Console.WriteLine("Tack för idag!");
+                return;
             }
         }
 
