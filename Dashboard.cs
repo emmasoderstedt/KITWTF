@@ -41,7 +41,7 @@ namespace KITWTF1
                                     Console.WriteLine("Skriv in din väns användarnamn: ");
                                     string friendUsername = Console.ReadLine();
 
-                                    userFriendID = DBHandler.GetID(friendUsername);
+                                    userFriendID = DBHandler.GetIDFromLogin(friendUsername);
                                     if (userFriendID != 0)
                                     {
                                         Console.WriteLine("Skriv in ett namn på er relation:");
@@ -66,7 +66,7 @@ namespace KITWTF1
                             break;
 
                             case 1: //Lägg till användare (utan konto)
-                                Console.Write("Skriv in personens namn:");
+                                Console.Write("Skriv in personens namn: ");
                                 string Name = Console.ReadLine();
 
                                 // Console.Write("Skriv in telefonnummer: ");
@@ -78,7 +78,7 @@ namespace KITWTF1
                                 Console.Write("Skriv in namn på relationen: ");
                                 string relationName = Console.ReadLine();
 
-                                Console.Write("Antal dagar mellan kontakt:");
+                                Console.Write("Antal dagar mellan kontakt: ");
                                 int contactTime = 0;
                                 bool exitLoop = true;
                                 while (exitLoop)
@@ -98,11 +98,12 @@ namespace KITWTF1
 
                                 DBHandler.AddRelation(relationName, userID, friendID, contactTime);
                                 Console.WriteLine("Kontakten är tillagd!");
+                                Console.ReadKey();
 
                                 break;
                         }
                         break;
-                    case 2:
+                    case 2://logga ut
                         Console.WriteLine("Tack för idag!");
                         return;
                 }

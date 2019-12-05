@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +39,7 @@ namespace KITWTF1
         public void AddPerson(string Name)
         {
             string executeString = string.Format("INSERT INTO Person (PersonName) VALUES ('{0}')", Name);
+            Debug.WriteLine("Successfully sent: " + executeString);
             PersonTable.SendQuery(executeString);
         }
         private void AddUserToDatabase(LoginDetailsTable loginDetailsTable)
@@ -50,14 +52,14 @@ namespace KITWTF1
                                                                         loginDetailsTable.Password,
                                                                         loginDetailsTable.Email,
                                                                         loginDetailsTable.Phonenumber);
-            LoginDetailsTable.SendQuery(executeString);
             Debug.WriteLine("Successfully sent: " + executeString);
+            LoginDetailsTable.SendQuery(executeString);
         }
         private void AddUserToDatabase(PersonTable personTable)
         {
             /// <summary> Add a user to the Person table
             string executeString = string.Format("INSERT INTO Student29.dbo.Person(PersonName) OUTPUT INSERTED.PersonID VALUES ('{0}')", personTable.Name);
-
+            
             var query = PersonTable.SendAndGetQuery(executeString);
             Debug.WriteLine("Successfully sent: " + executeString);
             foreach (var items in query)
@@ -174,6 +176,18 @@ namespace KITWTF1
         public int GetID(string Username)
         {   /// <summary> Returns the ID of the matching Username combination
             string executeString = string.Format("EXEC GetID @Username = '{0}'", Username);
+            var query = LoginDetailsTable.SendAndGetQuery(executeString);
+            Console.WriteLine(query);
+
+            foreach (var item in query)
+            {
+                return item.PersonID;
+            }
+            return 0;
+        }
+        public int GetIDFromLogin(string Username)
+        {   /// <summary> Returns the ID of the matching Username combination
+            string executeString = string.Format("EXEC GetIDFromLogin @Username = '{0}'", Username);
             var query = LoginDetailsTable.SendAndGetQuery(executeString);
             Debug.WriteLine(query);
 
