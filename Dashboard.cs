@@ -13,22 +13,15 @@ namespace KITWTF1
             while (true)
             {
                 DatabaseHandler DBHandler = new DatabaseHandler();
+
                 var dashboardMenu = new Menu(dashboardContent);
                 dashboardMenu = dashboardMenu.GetMenu(dashboardMenu, dashboardHeader);
+
                 switch (dashboardMenu.SelectedIndex)
                 {
                     case 0: //se kontakter 
-                        List<Person_PersonTable> relations = new List<Person_PersonTable>();
-                        relations = DBHandler.ListRelation(userID);
-
-                        foreach (var relation in relations)
-                        {
-                            Console.WriteLine("Namn: " + relation.PersonName);
-                            Console.WriteLine("Namn på relation: " + relation.Alias);
-                            Console.WriteLine("Tid kvar: " + DBHandler.GetRemainingTime(userID, relation.ContactID) + " dagar");
-                            Console.WriteLine("--------------------------------------");
-                        }
-                        Console.ReadKey();
+                        OutputContactList(DBHandler.ListRelation(userID));
+                        Console.WriteLine("\nTryck valfri tangent för att gå vidare");
                         break;
 
                     case 1:  //lägg till kontakt
@@ -48,7 +41,7 @@ namespace KITWTF1
                                     Console.WriteLine("Skriv in din väns användarnamn: ");
                                     string friendUsername = Console.ReadLine();
 
-                                    userFriendID = DBHandler.GetID(friendUsername);
+                                    userFriendID = DBHandler.GetIDFromLogin(friendUsername);
                                     if (userFriendID != 0)
                                     {
                                         Console.WriteLine("Skriv in ett namn på er relation:");
@@ -60,6 +53,8 @@ namespace KITWTF1
 
                                         DBHandler.AddRelation(alias, userID, userFriendID, RemaningTime);
                                         Console.WriteLine("Kontakten är tillagd!");
+                                        Console.WriteLine("\nTryck valfri tangent för att gå vidare");
+                                        Console.ReadKey();
                                         break;
                                     }
                                     else
@@ -71,7 +66,7 @@ namespace KITWTF1
                             break;
 
                             case 1: //Lägg till användare (utan konto)
-                                Console.Write("Skriv in personens namn:");
+                                Console.Write("Skriv in personens namn: ");
                                 string Name = Console.ReadLine();
 
                                 // Console.Write("Skriv in telefonnummer: ");
@@ -83,7 +78,7 @@ namespace KITWTF1
                                 Console.Write("Skriv in namn på relationen: ");
                                 string relationName = Console.ReadLine();
 
-                                Console.Write("Antal dagar mellan kontakt:");
+                                Console.Write("Antal dagar mellan kontakt: ");
                                 int contactTime = 0;
                                 bool exitLoop = true;
                                 while (exitLoop)
@@ -103,16 +98,30 @@ namespace KITWTF1
 
                                 DBHandler.AddRelation(relationName, userID, friendID, contactTime);
                                 Console.WriteLine("Kontakten är tillagd!");
+                                Console.ReadKey();
 
                                 break;
                         }
                         break;
-                    case 2:
+                    case 2://logga ut
                         Console.WriteLine("Tack för idag!");
                         return;
                 }
 
             }
+        }
+        public static void OutputContactList(List<Person_PersonTable> relations)
+        {
+            foreach (var relation in relations)
+            {
+                Console.WriteLine();
+                Console.WriteLine("Namn: " + relation.PersonName);
+                Console.WriteLine("Namn på relation: " + relation.Alias);
+                Console.WriteLine("Tid kvar: " + relation.RemainingTime + " dagar");
+                Console.WriteLine("--------------------------------------");
+            }
+            Console.WriteLine("\nTryck valfri tangent för att gå vidare");
+            Console.ReadKey();
         }
 
     }

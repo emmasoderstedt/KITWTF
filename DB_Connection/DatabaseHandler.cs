@@ -1,7 +1,8 @@
-using Dapper;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
+using System.Collections.Generic;
+using System.Linq;
+using Dapper;
 using System.Data.SqlClient;
 using System.Linq;
 
@@ -39,6 +40,7 @@ namespace KITWTF1
         public void AddPerson(string Name)
         {
             string executeString = string.Format("INSERT INTO Person (PersonName) VALUES ('{0}')", Name);
+            Debug.WriteLine("Successfully sent: " + executeString);
             PersonTable.SendQuery(executeString);
         }
         private void AddUserToDatabase(LoginDetailsTable loginDetailsTable)
@@ -51,14 +53,14 @@ namespace KITWTF1
                                                                         loginDetailsTable.Password,
                                                                         loginDetailsTable.Email,
                                                                         loginDetailsTable.Phonenumber);
-            LoginDetailsTable.SendQuery(executeString);
             Debug.WriteLine("Successfully sent: " + executeString);
+            LoginDetailsTable.SendQuery(executeString);
         }
         private void AddUserToDatabase(PersonTable personTable)
         {
             /// <summary> Add a user to the Person table
             string executeString = string.Format("INSERT INTO Student29.dbo.Person(PersonName) OUTPUT INSERTED.PersonID VALUES ('{0}')", personTable.Name);
-
+            
             var query = PersonTable.SendAndGetQuery(executeString);
             Debug.WriteLine("Successfully sent: " + executeString);
             foreach (var items in query)
@@ -113,7 +115,7 @@ namespace KITWTF1
                 Username,
                 Password);
             var query = LoginDetailsTable.SendAndGetQuery(executeString);
-            LoginDetailsTable[] queryArray = query.AsList().ToArray();
+            LoginDetailsTable[] queryArray = query.ToArray();
             
             return isCorrectCredentials(queryArray);
         }
@@ -125,7 +127,7 @@ namespace KITWTF1
                 Email,
                 Password);
             var query = LoginDetailsTable.SendAndGetQuery(executeString);
-            LoginDetailsTable[] queryArray = query.AsList().ToArray();
+            LoginDetailsTable[] queryArray = query.ToArray();
 
             return isCorrectCredentials(queryArray);
         }
@@ -161,7 +163,7 @@ namespace KITWTF1
             string executeString = string.Format("EXEC SelectAllPersonRelation @Id = {0}", id);
             var query = Person_PersonTable.SendAndGetQuery(executeString);
 
-            return query.AsList();
+            return query.ToList();
         }
         /* -------------------------------- Get Data -------------------------------- */
         public List<LoginDetailsTable> getData(string Username)
@@ -170,12 +172,24 @@ namespace KITWTF1
             string executeString = string.Format("EXEC SearchForUsername @Username = '{0}'", Username);
             var query = LoginDetailsTable.SendAndGetQuery(executeString);
 
-            return query.AsList();
+            return query.ToList();
         }
         /* --------------------------------- Search --------------------------------- */
         public int GetID(string Username)
         {   /// <summary> Returns the ID of the matching Username combination
             string executeString = string.Format("EXEC GetID @Username = '{0}'", Username);
+            var query = LoginDetailsTable.SendAndGetQuery(executeString);
+            Console.WriteLine(query);
+
+            foreach (var item in query)
+            {
+                return item.PersonID;
+            }
+            return 0;
+        }
+        public int GetIDFromLogin(string Username)
+        {   /// <summary> Returns the ID of the matching Username combination
+            string executeString = string.Format("EXEC GetIDFromLogin @Username = '{0}'", Username);
             var query = LoginDetailsTable.SendAndGetQuery(executeString);
             Debug.WriteLine(query);
 
@@ -264,7 +278,6 @@ namespace KITWTF1
         public string Alias { get; set; }
         public int ContactID { get; set; }
         public int RemainingTime { get; set; }
-
         public string PersonName { get; set;}
 
         public string lastCommunication { get; set ;}

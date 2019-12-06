@@ -9,7 +9,8 @@ namespace KITWTF1
     public class Program
     {
         public static void Main(string[] args)
-        {   bool loop = true;
+        {
+            bool loop = true;
             DatabaseHandler dbHandler = new DatabaseHandler();
 
             Debug.WriteLine(dbHandler.GetIdentity());
@@ -30,65 +31,65 @@ namespace KITWTF1
                     case 1:  //Starta konsollapp
 
                         string mainMenuHeader = "KITWTF";
-                        string[] mainMenuContent = new string[] { "Logga in", "Skapa nytt konto" };
+                        string[] mainMenuContent = new string[] { "Logga in", "Skapa nytt konto", "Avsluta konsolapplikation" };
 
                         var mainMenu = new Menu(mainMenuContent);
                         mainMenu = mainMenu.GetMenu(mainMenu, mainMenuHeader);
-
-                        switch (mainMenu.SelectedIndex)
+                        bool konsolMenu = true;
+                        while (konsolMenu)
                         {
-                            case 0://Logga in
+                            switch (mainMenu.SelectedIndex)
+                            {
+                                case 0://Logga in
 
-                                Console.Write("Skriv in ditt användarnamn: ");
-                                var username = Console.ReadLine();
+                                    Console.Write("Skriv in ditt användarnamn: ");
+                                    var username = Console.ReadLine();
 
-                                Console.Write("Skriv in ditt lösenord : ");
-                                var password = Console.ReadLine();
+                                    Console.Write("Skriv in ditt lösenord : ");
+                                    var password = Console.ReadLine();
 
-                                bool loggedIn = dbHandler.LoginUsername(username, password);//om godkänt skicka koden vidare till Dashboard.cs
-                                if (loggedIn){
-                                    Dashboard dashboard = new Dashboard();
-                                    int ID = dbHandler.GetID(username);
-                                    dashboard.dashboard(ID);
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Felaktigt lösenord eller användarnamn. \n Tryck valfri tangent för att försöka igen");
-                                    Console.ReadKey();
-                                }
-                                break;
+                                    bool loggedIn = dbHandler.LoginUsername(username, password);//om godkänt skicka koden vidare till Dashboard.cs
+                                    if (loggedIn)
+                                    {
+                                        Dashboard dashboard = new Dashboard();
+                                        int ID = dbHandler.GetID(username);
+                                        dashboard.dashboard(ID);
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Felaktigt lösenord eller användarnamn. \n Tryck valfri tangent för att försöka igen");
+                                        Console.ReadKey();
+                                    }
+                                    break;
 
-                            case 1: //Skapa nytt konto
+                                case 1: //Skapa nytt konto
 
-                                User newUser = new User();
+                                    User newUser = new User();
 
-                                Console.Write("Skriv in ditt namn: ");
-                                newUser.Name = Console.ReadLine();
+                                    Console.Write("Skriv in ditt namn: ");
+                                    newUser.Name = Console.ReadLine();
 
-                                Console.Write("Skriv in användarnamn: ");
-                                newUser.Username = Console.ReadLine();
+                                    Console.Write("Skriv in användarnamn: ");
+                                    newUser.Username = Console.ReadLine();
 
-                                Console.Write("Skriv in lösenord: ");
-                                newUser.Password = Console.ReadLine();
+                                    Console.Write("Skriv in lösenord: ");
+                                    newUser.Password = Console.ReadLine();
 
-                                Console.Write("Skriv in e-post adress: ");
-                                newUser.Email = Console.ReadLine();
+                                    Console.Write("Skriv in e-post adress: ");
+                                    newUser.Email = Console.ReadLine();
 
-                                Console.Write("Skriv in telefonnummer: ");
-                                newUser.Phonenumber = Console.ReadLine();
-                                try{
-                                    int phoneAsInt = Convert.ToInt32(newUser.Phonenumber);
+                                    // Console.Write("Skriv in telefonnummer: ");
+                                    // newUser.Phonenumber = Console.ReadLine();
+                                    // int phoneAsInt = Convert.ToInt32(newUser.Phonenumber);
                                     dbHandler.AddUser(newUser);
-                                }catch{
-                                    Console.WriteLine("Ange endast siffror i telefonnummer.");
-                                    Console.Read();
-                                }
+                                    break;
 
-
-                                break;
+                                case 3: //No worky... too tired
+                                    konsolMenu = false;
+                                    return;
+                            }
                         }
                         break;
-
                 }
             }
         }
