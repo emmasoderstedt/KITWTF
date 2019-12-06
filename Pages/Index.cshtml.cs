@@ -18,6 +18,8 @@ namespace KITWTF1.Pages
         public int id {get;set;}
         public string nameTest { get; set; }
 
+        public string boolTest { get; set; }
+
       
    
         public void OnGet()
@@ -27,21 +29,38 @@ namespace KITWTF1.Pages
         
         public IActionResult OnPost(string email,string password)
         {
+          if(email!=null||password!=null)
+          {
                try
                { 
                         DatabaseHandler dbh = new DatabaseHandler();
                        
-                                            if(dbh.LoginUsername(email,password))
+                                            if(dbh.LoginUsername(email,password)==false)
                                             {
-                                                    DatabaseHandler.userName = email; 
-                                                     return Redirect("/LoggedIn?id="+id);
-                                            }                                 
+
+                                                    return Redirect("/Index?Error");
+
+                                            }
+                                            else
+                                            {
+                                                      DatabaseHandler.userName = email;
+                                                      Console.WriteLine(dbh.LoginUsername(email,password));
+                                                      
+                                                      int ID = dbh.GetID(Username);
+                                                       
+                                                      return Redirect("/LoggedIn?id="+ID);
+                                            }
+                                                    
+                                                                         
                                            return null;   
                }
                catch (System.Exception)
                {             
                  return null;
                }
+          }
+             return null;
         }
+        
     }
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace KITWTF1
 {
@@ -98,7 +99,8 @@ namespace KITWTF1
                                                                                                                     person_PersonTable.Alias,
                                                                                                                     person_PersonTable.PersonID,
                                                                                                                     person_PersonTable.ContactID,
-                                                                                                                    person_PersonTable.RemainingTime);
+                                                                                                                    person_PersonTable.RemainingTime,
+                                                                                                                    person_PersonTable.lastCommunication= DateTime.Now.ToString());
             Person_PersonTable.SendQuery(executeString);
             Debug.WriteLine("Successfully sent: " + executeString);
         }
@@ -265,6 +267,8 @@ namespace KITWTF1
 
         public string PersonName { get; set;}
 
+        public string lastCommunication { get; set ;}
+
         public static void SendQuery(string ExecuteString)
         { /// <summary> Sends the ExecuteString as a sql statement to the database
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -280,6 +284,74 @@ namespace KITWTF1
                 return query;
             }
         }
+        public int DayCounter(string dateOne,string dateTwo)
+       {
+            string[] newDone= dateOne.Split("-");
+            string[] newDtwo = dateTwo.Split("-");
+            int dateYearOne = Convert.ToInt32(newDone[0]);
+            int dateYearTwo = Convert.ToInt32(newDtwo[0]);
+            int dateDayOne = Convert.ToInt32(newDone[2]);
+            int dateDayTwo = Convert.ToInt32(newDtwo[2]);
+            int dateMonthOne  = Convert.ToInt32(newDone[1]);
+            int dateMonthTwo = Convert.ToInt32(newDtwo[1]);
+            DateTime startDate = new DateTime(dateYearOne,dateMonthOne,dateDayOne);
+            DateTime endDate = new DateTime(dateYearTwo,dateMonthTwo,dateDayTwo);
+
+            TimeSpan daysBetween = endDate - startDate;
+
+            return daysBetween.Days;
+    
+
+        }
+         public int ContactRelative(string PersonID)
+        {              
+                    DateTime date = new DateTime();
+               try
+               { 
+                        
+                    string connectionString="server=40.85.84.155;Database=student29;User Id=student29;Password=YH-student@2019";
+                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    {       
+                                   return  connection.Query<Person_PersonTable >($"Update person_person set lastCommunication = '{date}' where PersonID ='{PersonID}'").FirstOrDefault().ContactID;
+                                     
+                                  
+                                     
+                                            
+                    }
+               }
+               catch (System.Exception)
+               {             
+                   return 0;
+               }
+               return 0;
+        }
+        public override string ToString()
+       {
+            
+            string date = DateTime.Now.ToString("yyyy-MM-dd");
+            if(DayCounter(lastCommunication.Substring(0,10),date)>8)
+            {
+                    return lastCommunication.Substring(0,10)
+
+                    ;
+
+            }
+               
+
+           
+             else {   
+                    return lastCommunication.Substring(0,10);
+
+                    
+               
+             }
+             return "";
+           
+           
+           
+       }
         
     }
+    
+    
 }

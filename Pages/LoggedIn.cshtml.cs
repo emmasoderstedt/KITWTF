@@ -16,22 +16,42 @@ namespace KITWTF1.Pages
         public string friend { get; set; }
         public string userLogged { get; set; }
 
+       public bool contact { get; set; }
+
+       public string daysGone { get; set; }
+
+       public string lastContact { get; set; }
+
+      
+
+
+
         public List<Person_PersonTable> personList = new List<Person_PersonTable>();
         public void OnGet(int? id=null)
         {
 
             try
             {
+             
+                string todaysDate = DateTime.Now.ToString("yyyy-MM-dd");
                 DatabaseHandler dbhandler = new DatabaseHandler();
-               
-                //dbhandler.getData(DatabaseHandler.userName);
-                
+                Person_PersonTable ppt = new Person_PersonTable();
                 personList = dbhandler.ListRelation(dbhandler.GetID(DatabaseHandler.userName));
-                ///foreach (var item in personList)
-                {
-                   // dbhandler.GetRemainingTime(dbhandler.GetID(DatabaseHandler.userName), item.ContactID);
-                }
+                int PersonID= dbhandler.GetID(DatabaseHandler.userName);
+                string connectionString="server=40.85.84.155;Database=student29;User Id=student29;Password=YH-student@2019";
+                 using (SqlConnection connection = new SqlConnection(connectionString))
+                 {       
+                       var dateFromDB = connection.Query<Person_PersonTable >($"select * from person_person where PersonID ='{PersonID}'").FirstOrDefault().lastCommunication;
+           
+                    string date  =  dateFromDB.Substring(0,10);
+                    lastContact = date;
+                    daysGone = Convert.ToString(ppt.DayCounter(date,todaysDate.Substring(0,10)));
+                    if(ppt.DayCounter(todaysDate.Substring(0,10),date)<ppt.RemainingTime)
+                    {
+                                contact = true;
+                    }
                 
+                 }
 
 
             }
@@ -41,6 +61,11 @@ namespace KITWTF1.Pages
               
             }
                 
+        }
+        public void OnPost(int id)
+        {
+
+
         }
     }
 }
