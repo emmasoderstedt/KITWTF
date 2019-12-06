@@ -111,10 +111,12 @@ namespace KITWTF1
         {
             foreach (var relation in relations)
             {
+                
                 Console.WriteLine();
                 Console.WriteLine("Namn: " + relation.PersonName);
                 Console.WriteLine("AKA: " + relation.Alias);
                 Console.WriteLine("Tid kvar: " + relation.RemainingTime + " dagar");
+                Console.WriteLine("Senaste kontakt:"+ relation.lastCommunication.Substring(0,10));
                 Console.WriteLine("--------------------------------------");
             }
             Console.WriteLine("\nTryck valfri tangent för att gå vidare");
