@@ -13,7 +13,7 @@ namespace KITWTF1
             bool loop = true;
             DatabaseHandler dbHandler = new DatabaseHandler();
 
-            Debug.WriteLine(dbHandler.GetIdentity());
+            Debug.WriteLine(dbHandler.GetIDNonUserentity());
 
             string startMenuHeader = "Välj vad du vill köra:";
             string[] startMenuContent = new string[] { "Webbsida", "Konsolapplikation" };

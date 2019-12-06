@@ -75,7 +75,7 @@ namespace KITWTF1
                                 // newUser.Phonenumber = Console.ReadLine();
 
                                 DBHandler.AddPerson(Name);
-                                int friendID = DBHandler.GetIdentity();
+                                int friendID = DBHandler.GetIDNonUserentity();
 
                                 Console.Write("Skriv in namn på relationen: ");
                                 string relationName = Console.ReadLine();

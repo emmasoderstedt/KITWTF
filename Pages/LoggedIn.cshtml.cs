@@ -36,8 +36,8 @@ namespace KITWTF1.Pages
                 string todaysDate = DateTime.Now.ToString("yyyy-MM-dd");
                 DatabaseHandler dbhandler = new DatabaseHandler();
                 Person_PersonTable ppt = new Person_PersonTable();
-                personList = dbhandler.ListRelation(dbhandler.GetID(DatabaseHandler.userName));
-                int PersonID= dbhandler.GetID(DatabaseHandler.userName);
+                personList = dbhandler.ListRelation(dbhandler.GetIDNonUser(DatabaseHandler.userName));
+                int PersonID= dbhandler.GetIDNonUser(DatabaseHandler.userName);
                 string connectionString="server=40.85.84.155;Database=student29;User Id=student29;Password=YH-student@2019";
                  using (SqlConnection connection = new SqlConnection(connectionString))
                  {       

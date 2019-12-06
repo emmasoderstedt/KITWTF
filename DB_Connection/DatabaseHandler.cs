@@ -177,7 +177,7 @@ namespace KITWTF1
         /* --------------------------------- Search --------------------------------- */
         public int GetIDNonUser(string Username)
         {   /// <summary> Returns the ID from users without accounts of the matching Username combination
-            string executeString = string.Format("EXEC GetID @Username = '{0}'", Username);
+            string executeString = string.Format("EXEC GetIDNonUser @Username = '{0}'", Username);
             var query = LoginDetailsTable.SendAndGetQuery(executeString);
             Console.WriteLine(query);
 
@@ -189,7 +189,7 @@ namespace KITWTF1
         }
         public int GetIDExistingUser(string Username)
         {   /// <summary> Returns the ID from users with accounts of the matching Username combination
-            string executeString = string.Format("EXEC GetIDFromLogin @Username = '{0}'", Username);
+            string executeString = string.Format("EXEC GetIDNonUserFromLogin @Username = '{0}'", Username);
             var query = LoginDetailsTable.SendAndGetQuery(executeString);
             Debug.WriteLine(query);
 
@@ -199,7 +199,7 @@ namespace KITWTF1
             }
             return 0;
         }
-        public int GetIdentity()
+        public int GetIDNonUserentity()
         {   /// <summary> Returns the ID of the latest submission to the DB
             string connectionString = "server=40.85.84.155;Database=student29;User Id=student29;Password=YH-student@2019";
             SqlConnection connection = new SqlConnection(connectionString);
