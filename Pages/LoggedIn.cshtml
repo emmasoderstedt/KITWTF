@@ -4,48 +4,56 @@
 @{
     ViewData["Title"] = "Home page";
 }
+
 <div class="text-center">
-    <blockquote class="blockquote">
-  <p class="mb-0"> <h1 class="text-white">K.I.T.W.T.F </h1> </p>
-  <footer class="blockquote-footer text-white" >Keep In Touch With The Family <cite title="Source Title">Fktup Youth 2019</cite></footer>
-</blockquote>
+        <blockquote class="blockquote">
+            <p class="mb-0"> <h1 class="text-white">K.I.T.W.T.F </h1> </p>
+            <footer class="blockquote-footer text-white" >Keep In Touch With The Family <cite title="Source Title">Fktup Youth 2019</cite></footer>
+        </blockquote>
 </div>           
                          
 <div class="text-left">
 @Model.friend
  
         <div class="row">
-    <div class="col-12 " >
+            <div class="col-12 " >
     
 <table class= "table table-bordered bg-white" style="width:100%">
-<thead>
-  <tr>
-    <th>Vän: </th>
-    <th> Relation:</th> 
-    <th> Kontakta om:</th>
-    <th> Kontakta</th>
-    <th> Senast kontaktad</th>
+    <thead>
+            <tr>
+                <th>Vän: </th>
+                <th> Relation:</th> 
+                <th> Tidsintervall::</th>
+                <th> Kontakta</th>
+                <th> Senast kontaktad</th>
+    
 
-  </tr>
-</thead>
-<tbody>
-  @foreach (var item in Model.personList)
-  {   
-   <tr>
-    <td>@(item.PersonName) </td>
-    <td>@(@item.Alias)</td> 
-    <td>  @(item.RemainingTime) Dagar</td> 
-    <td>
-        @if(Model.contact)
-       {
-             <button type="submit" class="btn btn-primary" >Kontakta</button> 
-       }
+            </tr>
+    </thead>
+        <tbody>
+             @foreach (var item in Model.personList)
+             {   
+                <tr>
+                    <td>@(item.PersonName) </td>
+                    <td>@(@item.Alias)</td> 
+                    <td>  @(item.RemainingTime) Dagar</td> 
+                    <td>
+                        @if(item.RemainingTime<=item.lastContact)
+                        {   Model.ContactID =item.ContactID;
+                        <form asp-action = "LoggedIn">
+                                <div class="form-group">   
+                            <button type="submit" value= @(item.ContactID) class="btn btn-primary" >Kontakta</button>
+                        </div>
+                        </form>
+                        }
        
-    </td>
-    <td>@(Model.lastContact)</td>
-  </tr>
-  }
-</tbody>
+                    </td>
+                    <td>@(item.lastCommunication.Substring(0,10))</td> 
+    
+
+                </tr>
+             }
+        </tbody>
 </table>
  
 </div>

@@ -96,13 +96,22 @@ namespace KITWTF1
         {
             /// <summary> Adds an relation between two people
             /// <para> Doing this by adding the connection to Person_Person table
-
+           
             string executeString = string.Format("INSERT INTO Student29.dbo.Person_Person VALUES ('{0}', {1}, {2}, {3})",
                                                                                                                     person_PersonTable.Alias,
                                                                                                                     person_PersonTable.PersonID,
                                                                                                                     person_PersonTable.ContactID,
-                                                                                                                    person_PersonTable.RemainingTime,
-                                                                                                                    person_PersonTable.lastCommunication= DateTime.Now.ToString());
+                                                                                                                    person_PersonTable.RemainingTime);
+            Person_PersonTable.SendQuery(executeString);
+            Debug.WriteLine("Successfully sent: " + executeString);
+        }
+        public void UpdateDatetime(Person_PersonTable person_PersonTable)
+        {
+            /// <summary> Adds an relation between two people
+            /// <para> Doing this by adding the connection to Person_Person table
+           
+            string executeString = string.Format("UPDATE Student29.dbo.Person_Person SET lastCommunication ='{0}' where ContactID={1})",person_PersonTable.lastCommunication,person_PersonTable.ContactID);
+                                                                                                                 
             Person_PersonTable.SendQuery(executeString);
             Debug.WriteLine("Successfully sent: " + executeString);
         }
@@ -177,7 +186,7 @@ namespace KITWTF1
         /* --------------------------------- Search --------------------------------- */
         public int GetIDNonUser(string Username)
         {   /// <summary> Returns the ID from users without accounts of the matching Username combination
-            string executeString = string.Format("EXEC GetIDNonUser @Username = '{0}'", Username);
+            string executeString = string.Format("EXEC GetID @Username = '{0}'", Username);
             var query = LoginDetailsTable.SendAndGetQuery(executeString);
             Console.WriteLine(query);
 
@@ -281,6 +290,8 @@ namespace KITWTF1
         public string PersonName { get; set;}
 
         public string lastCommunication { get; set ;}
+
+        public int lastContact { get; set; }
 
         public static void SendQuery(string ExecuteString)
         { /// <summary> Sends the ExecuteString as a sql statement to the database

@@ -18,16 +18,20 @@ namespace KITWTF1.Pages
 
        public bool contact { get; set; }
 
-       public string daysGone { get; set; }
+       public int daysGone { get; set; }
 
-       public string lastContact { get; set; }
+       public int lastContact { get; set; }
+
+       public int setDays { get; set; }
+
+       public int ContactID { get; set; }
 
       
 
 
 
         public List<Person_PersonTable> personList = new List<Person_PersonTable>();
-        public void OnGet(int? id=null)
+        public  void OnGet(int? id=null)
         {
 
             try
@@ -38,19 +42,31 @@ namespace KITWTF1.Pages
                 Person_PersonTable ppt = new Person_PersonTable();
                 personList = dbhandler.ListRelation(dbhandler.GetIDNonUser(DatabaseHandler.userName));
                 int PersonID= dbhandler.GetIDNonUser(DatabaseHandler.userName);
+                
+
                 string connectionString="server=40.85.84.155;Database=student29;User Id=student29;Password=YH-student@2019";
                  using (SqlConnection connection = new SqlConnection(connectionString))
                  {       
-                       var dateFromDB = connection.Query<Person_PersonTable >($"select * from person_person where PersonID ='{PersonID}'").FirstOrDefault().lastCommunication;
-           
-                    string date  =  dateFromDB.Substring(0,10);
-                    lastContact = date;
-                    daysGone = Convert.ToString(ppt.DayCounter(date,todaysDate.Substring(0,10)));
-                    if(ppt.DayCounter(todaysDate.Substring(0,10),date)<ppt.RemainingTime)
-                    {
-                                contact = true;
-                    }
+                       
+                            var dateFromDB = connection.Query<Person_PersonTable >($"select * from person_person where PersonID ='{PersonID}'").ToList();
+                    
+                  
+                  
+                        foreach (var item in personList)
+                        {
+                            
+                            var dateFromContact = dateFromDB.FirstOrDefault(x => x.ContactID ==item.PersonID);
+                            item.lastContact =  ppt.DayCounter(dateFromContact.lastCommunication.Substring(0,10),todaysDate.Substring(0,10));
+                            
+                        }
+                      
+
+                       
                 
+                   
+                   
+                     
+                      
                  }
 
 
@@ -62,10 +78,24 @@ namespace KITWTF1.Pages
             }
                 
         }
-        public void OnPost(int id)
+        public  void OnPost(int ContactID)
         {
+               string date = DateTime.Now.ToString("yyyy-MM-dd");
+               try
+               { 
+                        
+                    DatabaseHandler dbhandler = new DatabaseHandler();
+                    Person_PersonTable ppt = new Person_PersonTable();
+                    ppt.lastCommunication= date;
+                    ppt.ContactID = ContactID;
 
-
+                   dbhandler.UpdateDatetime(ppt);
+               }
+               catch (System.Exception)
+               {             
+                   
+               }
+              
         }
     }
 }
