@@ -52,7 +52,7 @@ namespace KITWTF1
                                     if (loggedIn)
                                     {
                                         Dashboard dashboard = new Dashboard();
-                                        int ID = dbHandler.GetID(username);
+                                        int ID = dbHandler.GetIDNonUser(username);
                                         dashboard.dashboard(ID);
                                     }
                                     else

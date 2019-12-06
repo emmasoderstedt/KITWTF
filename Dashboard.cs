@@ -34,14 +34,14 @@ namespace KITWTF1
 
                         switch (addContactMenu.SelectedIndex)
                         {
-                            case 0: //Lägg till befrintlig användare
+                            case 0: // Skapa relation med befintlig användare
                                 while (true)
                                 {
                                     int userFriendID;
                                     Console.WriteLine("Skriv in din väns användarnamn: ");
                                     string friendUsername = Console.ReadLine();
 
-                                    userFriendID = DBHandler.GetIDFromLogin(friendUsername);
+                                    userFriendID = DBHandler.GetIDExistingUser(friendUsername);
                                     if (userFriendID != 0)
                                     {
                                         Console.WriteLine("Skriv in ett namn på er relation:");
@@ -50,6 +50,8 @@ namespace KITWTF1
                                         Console.WriteLine("Skriv in antal dagar du ska ha på dig att kontakta personen: ");
                                         string remaningTime = Console.ReadLine();
                                         int RemaningTime = Convert.ToInt32(remaningTime);
+
+                                        Console.WriteLine("you got this far");
 
                                         DBHandler.AddRelation(alias, userID, userFriendID, RemaningTime);
                                         Console.WriteLine("Kontakten är tillagd!");
@@ -65,7 +67,7 @@ namespace KITWTF1
                                 }
                             break;
 
-                            case 1: //Lägg till användare (utan konto)
+                            case 1: // Skapa relation med användare utan konto (icke användare)
                                 Console.Write("Skriv in personens namn: ");
                                 string Name = Console.ReadLine();
 
@@ -116,7 +118,7 @@ namespace KITWTF1
             {
                 Console.WriteLine();
                 Console.WriteLine("Namn: " + relation.PersonName);
-                Console.WriteLine("Namn på relation: " + relation.Alias);
+                Console.WriteLine("AKA: " + relation.Alias);
                 Console.WriteLine("Tid kvar: " + relation.RemainingTime + " dagar");
                 Console.WriteLine("--------------------------------------");
             }

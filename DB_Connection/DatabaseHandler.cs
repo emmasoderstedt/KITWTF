@@ -23,7 +23,7 @@ namespace KITWTF1
             // Add user to the Person table
             AddUserToDatabase(personTemplate);
 
-            int personID = GetID(personTemplate.Name);
+            int personID = GetIDNonUser(personTemplate.Name);
 
             // Creates and assign values
             LoginDetailsTable LoginDetailsTemplate = new LoginDetailsTable()
@@ -175,8 +175,8 @@ namespace KITWTF1
             return query.ToList();
         }
         /* --------------------------------- Search --------------------------------- */
-        public int GetID(string Username)
-        {   /// <summary> Returns the ID of the matching Username combination
+        public int GetIDNonUser(string Username)
+        {   /// <summary> Returns the ID from users without accounts of the matching Username combination
             string executeString = string.Format("EXEC GetID @Username = '{0}'", Username);
             var query = LoginDetailsTable.SendAndGetQuery(executeString);
             Console.WriteLine(query);
@@ -187,8 +187,8 @@ namespace KITWTF1
             }
             return 0;
         }
-        public int GetIDFromLogin(string Username)
-        {   /// <summary> Returns the ID of the matching Username combination
+        public int GetIDExistingUser(string Username)
+        {   /// <summary> Returns the ID from users with accounts of the matching Username combination
             string executeString = string.Format("EXEC GetIDFromLogin @Username = '{0}'", Username);
             var query = LoginDetailsTable.SendAndGetQuery(executeString);
             Debug.WriteLine(query);
