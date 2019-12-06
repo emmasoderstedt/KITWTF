@@ -42,7 +42,7 @@ namespace KITWTF1
                                     string friendUsername = Console.ReadLine();
 
                                     userFriendID = DBHandler.GetIDExistingUser(friendUsername);
-                                    if (userFriendID != 0)
+                                    if (userFriendID != 0) 
                                     {
                                         Console.WriteLine("Skriv in ett namn på er relation:");
                                         string alias = Console.ReadLine();
@@ -50,8 +50,6 @@ namespace KITWTF1
                                         Console.WriteLine("Skriv in antal dagar du ska ha på dig att kontakta personen: ");
                                         string remaningTime = Console.ReadLine();
                                         int RemaningTime = Convert.ToInt32(remaningTime);
-
-                                        Console.WriteLine("you got this far");
 
                                         DBHandler.AddRelation(alias, userID, userFriendID, RemaningTime);
                                         Console.WriteLine("Kontakten är tillagd!");
@@ -70,9 +68,6 @@ namespace KITWTF1
                             case 1: // Skapa relation med användare utan konto (icke användare)
                                 Console.Write("Skriv in personens namn: ");
                                 string Name = Console.ReadLine();
-
-                                // Console.Write("Skriv in telefonnummer: ");
-                                // newUser.Phonenumber = Console.ReadLine();
 
                                 DBHandler.AddPerson(Name);
                                 int friendID = DBHandler.GetIDNonUserentity();
