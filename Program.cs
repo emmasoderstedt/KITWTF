@@ -78,13 +78,10 @@ namespace KITWTF1
                                     Console.Write("Skriv in e-post adress: ");
                                     newUser.Email = Console.ReadLine();
 
-                                    // Console.Write("Skriv in telefonnummer: ");
-                                    // newUser.Phonenumber = Console.ReadLine();
-                                    // int phoneAsInt = Convert.ToInt32(newUser.Phonenumber);
                                     dbHandler.AddUser(newUser);
                                     break;
 
-                                case 3: //No worky... too tired
+                                case 3: // Backa till val om konsoll eller web
                                     konsolMenu = false;
                                     return;
                             }
