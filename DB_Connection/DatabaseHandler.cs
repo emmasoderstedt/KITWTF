@@ -110,7 +110,7 @@ namespace KITWTF1
             /// <summary> Adds an relation between two people
             /// <para> Doing this by adding the connection to Person_Person table
            
-            string executeString = string.Format("UPDATE Student29.dbo.Person_Person SET lastCommunication ='{0}' where ContactID={1})",person_PersonTable.lastCommunication,person_PersonTable.ContactID);
+            string executeString = string.Format("UPDATE Student29.dbo.Person_Person SET lastCommunication ='{0}' where ContactID='{1}'",person_PersonTable.lastCommunication,person_PersonTable.ContactID);
                                                                                                                  
             Person_PersonTable.SendQuery(executeString);
             Debug.WriteLine("Successfully sent: " + executeString);

@@ -31,7 +31,7 @@ namespace KITWTF1.Pages
 
 
         public List<Person_PersonTable> personList = new List<Person_PersonTable>();
-        public  void OnGet(int? id=null)
+        public  void OnGet(int? PersonID=null)
         {
 
             try
@@ -41,7 +41,7 @@ namespace KITWTF1.Pages
                 DatabaseHandler dbhandler = new DatabaseHandler();
                 Person_PersonTable ppt = new Person_PersonTable();
                 personList = dbhandler.ListRelation(dbhandler.GetIDNonUser(DatabaseHandler.userName));
-                int PersonID= dbhandler.GetIDNonUser(DatabaseHandler.userName);
+                PersonID= dbhandler.GetIDNonUser(DatabaseHandler.userName);
                 
 
                 string connectionString="server=40.85.84.155;Database=student29;User Id=student29;Password=YH-student@2019";
@@ -78,22 +78,23 @@ namespace KITWTF1.Pages
             }
                 
         }
-        public  void OnPost(int ContactID)
+        public  IActionResult OnPost(int ContactID)
         {
                string date = DateTime.Now.ToString("yyyy-MM-dd");
                try
                { 
-                        
+                   
                     DatabaseHandler dbhandler = new DatabaseHandler();
                     Person_PersonTable ppt = new Person_PersonTable();
                     ppt.lastCommunication= date;
                     ppt.ContactID = ContactID;
 
                    dbhandler.UpdateDatetime(ppt);
+                   return Redirect("/LoggedIn?id="+ContactID);
                }
                catch (System.Exception)
                {             
-                   
+                    return Redirect("/LoggedIn?id="+ContactID);
                }
               
         }

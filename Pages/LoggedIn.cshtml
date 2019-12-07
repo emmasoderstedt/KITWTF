@@ -39,11 +39,24 @@
                     <td>  @(item.RemainingTime) Dagar</td> 
                     <td>
                         @if(item.RemainingTime<=item.lastContact)
-                        {   Model.ContactID =item.ContactID;
+                        {   Model.ContactID = item.ContactID;
                         <form asp-action = "LoggedIn">
-                                <div class="form-group">   
-                            <button type="submit" value= @(item.ContactID) class="btn btn-primary" >Kontakta</button>
-                        </div>
+                                
+                        
+
+                    <div class="form-group">
+                           
+                            <input  asp-for="ContactID" type="submit" class="btn btn-primary form-control"> 
+                             
+                    </div>
+  
+  
+ 
+                    
+
+
+
+
                         </form>
                         }
        

@@ -44,7 +44,7 @@ namespace KITWTF1.Pages
                                             else
                                             {
                                                       DatabaseHandler.userName = email;
-                                                      Console.WriteLine(dbh.LoginUsername(email,password));
+                                                      //Console.WriteLine(dbh.LoginUsername(email,password));
                                                       
                                                       int ID = dbh.GetIDNonUser(Username);
                                                        
