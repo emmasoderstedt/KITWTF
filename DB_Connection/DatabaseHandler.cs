@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Dapper;
 using System.Data.SqlClient;
-using System.Linq;
 
 namespace KITWTF1
 {
@@ -47,7 +46,7 @@ namespace KITWTF1
         {
             /// <summary> Add a user to the LoginDetails table
             string executeString = string.Format(
-            "INSERT INTO Student29.dbo.LoginDetails VALUES ('{0}','{1}','{2}','{3}','{4}')",
+            "INSERT INTO Student29.dbo.LoginDetails VALUES ({0},'{1}','{2}','{3}','{4}')",
                                                                         loginDetailsTable.PersonID,
                                                                         loginDetailsTable.Username,
                                                                         loginDetailsTable.Password,
@@ -184,11 +183,10 @@ namespace KITWTF1
             return query.ToList();
         }
         /* --------------------------------- Search --------------------------------- */
-        public int GetIDNonUser(string Username)
+        public int GetIDNonUser(string Name)
         {   /// <summary> Returns the ID from users without accounts of the matching Username combination
-            string executeString = string.Format("EXEC GetID @Username = '{0}'", Username);
+            string executeString = string.Format("EXEC GetID @PersonName = '{0}'", Name);
             var query = LoginDetailsTable.SendAndGetQuery(executeString);
-            Console.WriteLine(query);
 
             foreach (var item in query)
             {
@@ -198,7 +196,7 @@ namespace KITWTF1
         }
         public int GetIDExistingUser(string Username)
         {   /// <summary> Returns the ID from users with accounts of the matching Username combination
-            string executeString = string.Format("EXEC GetIDNonUserFromLogin @Username = '{0}'", Username);
+            string executeString = string.Format("EXEC GetIDFromLogin @Username = '{0}'", Username);
             var query = LoginDetailsTable.SendAndGetQuery(executeString);
             Debug.WriteLine(query);
 

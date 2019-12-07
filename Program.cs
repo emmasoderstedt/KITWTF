@@ -3,7 +3,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using System.Diagnostics;
 using menu;
-
+using System.Data.SqlClient;
 namespace KITWTF1
 {
     public class Program
@@ -19,9 +19,9 @@ namespace KITWTF1
             string[] startMenuContent = new string[] { "Webbsida", "Konsolapplikation" };
 
             var startMenu = new Menu(startMenuContent);
-            startMenu = startMenu.GetMenu(startMenu, startMenuHeader);
             while (loop)
             {
+                startMenu = startMenu.GetMenu(startMenu, startMenuHeader);
                 switch (startMenu.SelectedIndex)
                 {
                     case 0: //Starta webserver
@@ -29,15 +29,15 @@ namespace KITWTF1
                         loop = false;
                         break;
                     case 1:  //Starta konsollapp
-
+                        loop = false;
                         string mainMenuHeader = "KITWTF";
                         string[] mainMenuContent = new string[] { "Logga in", "Skapa nytt konto", "Avsluta konsolapplikation" };
 
                         var mainMenu = new Menu(mainMenuContent);
-                        mainMenu = mainMenu.GetMenu(mainMenu, mainMenuHeader);
                         bool konsolMenu = true;
-                        while (konsolMenu)
+                        do
                         {
+                            mainMenu = mainMenu.GetMenu(mainMenu, mainMenuHeader);
                             switch (mainMenu.SelectedIndex)
                             {
                                 case 0://Logga in
@@ -78,18 +78,29 @@ namespace KITWTF1
                                     Console.Write("Skriv in e-post adress: ");
                                     newUser.Email = Console.ReadLine();
 
-                                    dbHandler.AddUser(newUser);
+
+                                    try
+                                    {
+                                        dbHandler.AddUser(newUser);
+                                    }
+                                    catch
+                                    {
+                                        Console.WriteLine("Otillåten inmatning");
+                                        Console.ReadLine();
+                                    }
+
                                     break;
 
-                                case 3: // Backa till val om konsoll eller web
+                                case 2: // Backa till val om konsoll eller web
                                     konsolMenu = false;
                                     return;
                             }
-                        }
+                        } while (konsolMenu);
                         break;
                 }
             }
         }
+
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>();

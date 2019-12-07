@@ -19,22 +19,23 @@ namespace KITWTF1
 
                 switch (dashboardMenu.SelectedIndex)
                 {
-                    case 0: //se kontakter 
+                    case 0: // Se kontakter 
                         OutputContactList(DBHandler.ListRelation(userID));
                         Console.WriteLine("\nTryck valfri tangent för att gå vidare");
                         break;
 
-                    case 1:  //lägg till kontakt
+                    case 1:  // Lägg till kontakt
 
                         string menuHeader = "Lägg till kontakt";
-                        string[] menuContent = new string[] { "Lägg till befintlig användare", "Lägg till kontakt utan konto" };
+                        string[] menuContent = new string[] { "Lägg till befintlig användare", "Lägg till kontakt utan konto" , "Tillbaka"};
 
                         var addContactMenu = new Menu(menuContent);
                         addContactMenu = addContactMenu.GetMenu(addContactMenu, menuHeader);
 
                         switch (addContactMenu.SelectedIndex)
                         {
-                            case 0: // Skapa relation med befintlig användare
+                            case 0: 
+                            // Skapa relation med befintlig användare
                                 while (true)
                                 {
                                     int userFriendID;
@@ -49,23 +50,38 @@ namespace KITWTF1
 
                                         Console.WriteLine("Skriv in antal dagar du ska ha på dig att kontakta personen: ");
                                         string remaningTime = Console.ReadLine();
-                                        int RemaningTime = Convert.ToInt32(remaningTime);
+                                        int RemainingTime = 0;
+                                        try
+                                        {
+                                            RemainingTime = Convert.ToInt32(remaningTime);
 
-                                        DBHandler.AddRelation(alias, userID, userFriendID, RemaningTime);
-                                        Console.WriteLine("Kontakten är tillagd!");
-                                        Console.WriteLine("\nTryck valfri tangent för att gå vidare");
+                                            DBHandler.AddRelation(alias, userID, userFriendID, RemainingTime);
+
+                                            Console.WriteLine("Kontakten är tillagd!");
+                                            Console.WriteLine("\nTryck valfri tangent för att gå vidare");
+                                        }
+                                        catch
+                                        {
+                                            Console.WriteLine("Skriv endast antal dagar i siffror");
+                                        }
                                         Console.ReadKey();
                                         break;
                                     }
                                     else
                                     {
                                         Console.WriteLine("Angivet användarnamn finnns ej registrerat.");
-                                        Console.ReadLine();
+                                        Console.WriteLine("Vill du gå tillbaka [J/n]");
+                                        var keyInfo = Console.ReadKey();
+                                        if (keyInfo.Key == ConsoleKey.Enter || keyInfo.KeyChar.ToString().ToLower() == "j")
+                                        {
+                                            break;
+                                        }
                                     }
                                 }
                             break;
 
-                            case 1: // Skapa relation med användare utan konto (icke användare)
+                            case 1: 
+                            // Skapa relation med användare utan konto (icke användare)
                                 Console.Write("Skriv in personens namn: ");
                                 string Name = Console.ReadLine();
 
@@ -96,12 +112,16 @@ namespace KITWTF1
                                 DBHandler.AddRelation(relationName, userID, friendID, contactTime);
                                 Console.WriteLine("Kontakten är tillagd!");
                                 Console.ReadKey();
+                                break;
+
+                                case 2:
 
                                 break;
+
                         }
                         break;
-                    case 2://logga ut
-                        Console.WriteLine("Tack för idag!");
+                    case 2:
+                    // Logga ut
                         return;
                 }
 
@@ -113,6 +133,7 @@ namespace KITWTF1
             {
                 
                 Console.WriteLine();
+                Console.WriteLine("--------------------------------------");
                 Console.WriteLine("Namn: " + relation.PersonName);
                 Console.WriteLine("AKA: " + relation.Alias);
                 Console.WriteLine("Tid kvar: " + relation.RemainingTime + " dagar");
