@@ -105,17 +105,15 @@ namespace KITWTF1
             Person_PersonTable.SendQuery(executeString);
             Debug.WriteLine("Successfully sent: " + executeString);
         }
-        public string  UpdateDatetime(Person_PersonTable person_PersonTable)
+        public void UpdateDatetime(Person_PersonTable person_PersonTable)
         {
             /// <summary> Adds an relation between two people
             /// <para> Doing this by adding the connection to Person_Person table
            
-            string executeString = string.Format("UPDATE Student29.dbo.Person_Person SET lastCommunication ='{0}' where ContactID='{1}')",person_PersonTable.lastCommunication,person_PersonTable.ContactID);
+            string executeString = string.Format("UPDATE Student29.dbo.Person_Person SET lastCommunication ='{0}' where ContactID='{1}'",person_PersonTable.lastCommunication,person_PersonTable.ContactID);
                                                                                                                  
             Person_PersonTable.SendQuery(executeString);
-          
             Debug.WriteLine("Successfully sent: " + executeString);
-            return "Done";
         }
         /* ---------------------------------- Login --------------------------------- */
         public bool LoginUsername(string Username, string Password)//return bool pls
