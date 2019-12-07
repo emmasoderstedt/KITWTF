@@ -26,6 +26,8 @@ namespace KITWTF1.Pages
 
        public int ContactID { get; set; }
 
+       public int PersonID { get; set; }
+
       
 
 
