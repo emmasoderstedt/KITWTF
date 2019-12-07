@@ -14,53 +14,33 @@ namespace KITWTF1.Pages
     {
         public string name {get; set;}
         
-     
         public string relation { get; set; }
 
         public string timeSpan { get; set; }
 
-        
-       
         public int PersonID { get; set; }
 
         public int id { get; set; }
        
-
-      
            public void OnGet(int PersonID)
            {
-                //nameTest = HttpContext.Session.GetString(SessionKeyName);
-            Console.WriteLine(PersonID+"adduser");
+              
            }
         
-      
         public IActionResult OnPost(int PersonID ,string name ,string relation,int timeSpan)
         {
-             PersonID=9982;
-             //PersonID = id;
-             Console.WriteLine(id);
+             
+             PersonID= DatabaseHandler.userID;
             if(name!=""&&relation!=""&&timeSpan!=0&&PersonID!=0)
             {
-
-         
                try
-               { 
-                   
-                   Person_PersonTable ppt = new Person_PersonTable();
-                   DatabaseHandler dbh = new DatabaseHandler();
-
+               {        
+                      
+                      DatabaseHandler dbh = new DatabaseHandler();
                       dbh.AddPerson(name);
                       int friendID = dbh.GetIDNonUserentity();
-
                       dbh.AddRelation(relation, PersonID, friendID, timeSpan);
-                  
                       return Redirect("/LoggedIn?id="+PersonID);
-                 
-
-
-
-
-
                }
                
                catch (System.Exception)
@@ -71,7 +51,7 @@ namespace KITWTF1.Pages
             }
             else
             {
-                    return Redirect("/Error"); 
+                    return Redirect("/AddRelation"); 
             }
         }
             

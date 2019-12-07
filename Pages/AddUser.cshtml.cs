@@ -13,24 +13,17 @@ namespace KITWTF1.Pages
     public class AddUserModel : PageModel
     {
         public string email {get; set;}
-        
-     
         public string UserPassword { get; set; }
-
         public string PhoneNumber { get; set; }
-
         public string Username { get; set; }
         public int id {get;set;}
-
         public string Name { get; set; }
 
-      
-           public void OnGet()
+        public void OnGet()
         {
-                //nameTest = HttpContext.Session.GetString(SessionKeyName);
+                
      
         }
-        
       
         public IActionResult OnPost(string name,string email,string Username,string Userpassword, string PhoneNumber )
         {

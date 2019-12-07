@@ -17,7 +17,6 @@ namespace KITWTF1.Pages
         public string password {get;set;}
         public int id {get;set;}
         public string nameTest { get; set; }
-
         public string boolTest { get; set; }
 
       

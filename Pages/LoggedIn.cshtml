@@ -26,8 +26,6 @@
                 <th> Tidsintervall::</th>
                 <th> Kontakta</th>
                 <th> Senast kontaktad</th>
-    
-
             </tr>
     </thead>
         <tbody>
@@ -41,48 +39,20 @@
                         @if(item.RemainingTime<=item.lastContact)
                         {   Model.ContactID = item.ContactID;
                         <form asp-action = "LoggedIn">
-                                
-                        
-
-                    <div class="form-group">
-                           
-                            <input  asp-for="ContactID" type="submit" class="btn btn-primary form-control"> 
-                             
+            
+                    <div class="form-group">             
+                            <input  asp-for="ContactID" type="submit" class="btn btn-primary form-control">              
                     </div>
-  
-  
- 
-                    
-
-
-
-
                         </form>
                         }
-       
                     </td>
                     <td>@(item.lastCommunication.Substring(0,10))</td> 
-    
-
                 </tr>
              }
         </tbody>
 </table>
- 
-                        
-            
-       
-           
-                            <a class="btn btn-primary" href="/AddRelation" role="button" asp-for="PersonID">Skapa Användare</a>
-            
-                        
-                
-                        
-                    
-</div>  
-    <div class="col-0">  
+                <a class="btn btn-primary" href="/AddRelation" role="button" asp-for="PersonID">Skapa Relation</a>            
 
-</div>
 
 
 

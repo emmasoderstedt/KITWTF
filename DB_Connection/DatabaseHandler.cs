@@ -10,6 +10,7 @@ namespace KITWTF1
     public class DatabaseHandler
     {
         public static string userName;
+        public static int userID;
         /* -------------------------------- Add User -------------------------------- */
         public void AddUser(User user)
         {
