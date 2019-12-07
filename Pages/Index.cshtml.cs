@@ -46,8 +46,8 @@ namespace KITWTF1.Pages
                                                       DatabaseHandler.userName = email;
                                                       //Console.WriteLine(dbh.LoginUsername(email,password));
                                                       
-                                                      int ID = dbh.GetIDNonUser(Username);
-                                                       
+                                                      int ID = dbh.GetIDNonUser( DatabaseHandler.userName);
+                                                       Console.WriteLine(ID);
                                                       return Redirect("/LoggedIn?id="+ID);
                                             }
                                                     

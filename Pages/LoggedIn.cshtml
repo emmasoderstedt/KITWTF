@@ -4,7 +4,7 @@
 @{
     ViewData["Title"] = "Home page";
 }
-
+                       
 <div class="text-center">
         <blockquote class="blockquote">
             <p class="mb-0"> <h1 class="text-white">K.I.T.W.T.F </h1> </p>
@@ -32,7 +32,7 @@
     </thead>
         <tbody>
              @foreach (var item in Model.personList)
-             {   
+             {         Model.PersonID=item.PersonID;
                 <tr>
                     <td>@(item.PersonName) </td>
                     <td>@(@item.Alias)</td> 
@@ -69,8 +69,19 @@
         </tbody>
 </table>
  
-</div>
-    <div class="col-0">       
+                        
+            
+       
+           
+                            <a class="btn btn-primary" href="/AddRelation" role="button" asp-for="PersonID">Skapa Användare</a>
+            
+                        
+                
+                        
+                    
+</div>  
+    <div class="col-0">  
+
 </div>
 
 

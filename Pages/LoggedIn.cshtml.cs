@@ -26,6 +26,10 @@ namespace KITWTF1.Pages
 
        public int ContactID { get; set; }
 
+       public int PersonID { get; set; }
+
+       public int userID { get; set; }
+
       
 
 
@@ -33,7 +37,7 @@ namespace KITWTF1.Pages
         public List<Person_PersonTable> personList = new List<Person_PersonTable>();
         public  void OnGet(int? PersonID=null)
         {
-
+           
             try
             {
              
@@ -42,7 +46,7 @@ namespace KITWTF1.Pages
                 Person_PersonTable ppt = new Person_PersonTable();
                 personList = dbhandler.ListRelation(dbhandler.GetIDNonUser(DatabaseHandler.userName));
                 PersonID= dbhandler.GetIDNonUser(DatabaseHandler.userName);
-                
+                 Console.WriteLine(PersonID+"logedin");
 
                 string connectionString="server=40.85.84.155;Database=student29;User Id=student29;Password=YH-student@2019";
                  using (SqlConnection connection = new SqlConnection(connectionString))
@@ -83,20 +87,22 @@ namespace KITWTF1.Pages
                string date = DateTime.Now.ToString("yyyy-MM-dd");
                try
                { 
-                   
+                    
                     DatabaseHandler dbhandler = new DatabaseHandler();
                     Person_PersonTable ppt = new Person_PersonTable();
-                    ppt.lastCommunication= date;
-                    ppt.ContactID = ContactID;
-
-                   dbhandler.UpdateDatetime(ppt);
-                   return Redirect("/LoggedIn?id="+ContactID);
+                     ppt.lastCommunication= date;
+                     ppt.ContactID = ContactID;
+                     Console.WriteLine(ContactID+ "Tryin to update date with "+date);
+                     dbhandler.UpdateDatetime(ppt);
+                    return Redirect("/LoggedIn?id="+PersonID);
                }
                catch (System.Exception)
                {             
-                    return Redirect("/LoggedIn?id="+ContactID);
+                    return Redirect("/LoggedIn?id="+PersonID);
                }
               
         }
+         
+
     }
 }
