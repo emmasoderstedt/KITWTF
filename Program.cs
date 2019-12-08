@@ -3,7 +3,6 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using System.Diagnostics;
 using menu;
-using System.Data.SqlClient;
 namespace KITWTF1
 {
     public class Program
@@ -31,7 +30,7 @@ namespace KITWTF1
                     case 1:  //Starta konsollapp
                         loop = false;
                         string mainMenuHeader = "KITWTF";
-                        string[] mainMenuContent = new string[] { "Logga in", "Skapa nytt konto", "Avsluta konsolapplikation" };
+                        string[] mainMenuContent = new string[] { "Logga in", "Skapa nytt konto", "Avsluta" };
 
                         var mainMenu = new Menu(mainMenuContent);
                         bool konsolMenu = true;
@@ -93,7 +92,7 @@ namespace KITWTF1
 
                                 case 2: // Backa till val om konsoll eller web
                                     konsolMenu = false;
-                                    return;
+                                    break;
                             }
                         } while (konsolMenu);
                         break;

@@ -19,11 +19,13 @@ namespace KITWTF1
             PersonTable personTemplate = new PersonTable()
             {
                 Name = user.Name
+                // Username = user.Username
             };
             // Add user to the Person table
             AddUserToDatabase(personTemplate);
 
             int personID = GetIDNonUser(personTemplate.Name);
+            Console.WriteLine("Hittade ID");
 
             // Creates and assign values
             LoginDetailsTable LoginDetailsTemplate = new LoginDetailsTable()
@@ -32,10 +34,12 @@ namespace KITWTF1
                 Email = user.Email,
                 Username = user.Username,
                 Password = user.Password,
-                Phonenumber = user.Phonenumber
+                //Phonenumber = user.Phonenumber
             };
+            Console.WriteLine("Skapade login details");
             // Add user to the LoginDetails table
             AddUserToDatabase(LoginDetailsTemplate);
+            Console.WriteLine("Lade till användare");
         }
         public void AddPerson(string Name)
         {
@@ -47,12 +51,12 @@ namespace KITWTF1
         {
             /// <summary> Add a user to the LoginDetails table
             string executeString = string.Format(
-            "INSERT INTO Student29.dbo.LoginDetails VALUES ({0},'{1}','{2}','{3}','{4}')",
+            "INSERT INTO Student29.dbo.LoginDetails VALUES ({0},'{1}','{2}','{3}')",
                                                                         loginDetailsTable.PersonID,
                                                                         loginDetailsTable.Username,
                                                                         loginDetailsTable.Password,
-                                                                        loginDetailsTable.Email,
-                                                                        loginDetailsTable.Phonenumber);
+                                                                        loginDetailsTable.Email);
+                                                                        //loginDetailsTable.Phonenumber);
             Debug.WriteLine("Successfully sent: " + executeString);
             LoginDetailsTable.SendQuery(executeString);
         }
@@ -60,7 +64,7 @@ namespace KITWTF1
         {
             /// <summary> Add a user to the Person table
             string executeString = string.Format("INSERT INTO Student29.dbo.Person(PersonName) OUTPUT INSERTED.PersonID VALUES ('{0}')", personTable.Name);
-            
+
             var query = PersonTable.SendAndGetQuery(executeString);
             Debug.WriteLine("Successfully sent: " + executeString);
             foreach (var items in query)
@@ -96,7 +100,7 @@ namespace KITWTF1
         {
             /// <summary> Adds an relation between two people
             /// <para> Doing this by adding the connection to Person_Person table
-           
+
             string executeString = string.Format("INSERT INTO Student29.dbo.Person_Person VALUES ('{0}', {1}, {2}, {3})",
                                                                                                                     person_PersonTable.Alias,
                                                                                                                     person_PersonTable.PersonID,
@@ -109,9 +113,9 @@ namespace KITWTF1
         {
             /// <summary> Adds an relation between two people
             /// <para> Doing this by adding the connection to Person_Person table
-           
-            string executeString = string.Format("UPDATE Student29.dbo.Person_Person SET lastCommunication ='{0}' where ContactID='{1}'",person_PersonTable.lastCommunication,person_PersonTable.ContactID);
-                                                                                                                 
+
+            string executeString = string.Format("UPDATE Student29.dbo.Person_Person SET lastCommunication ='{0}' where ContactID='{1}'", person_PersonTable.lastCommunication, person_PersonTable.ContactID);
+
             Person_PersonTable.SendQuery(executeString);
             Debug.WriteLine("Successfully sent: " + executeString);
         }
@@ -125,7 +129,7 @@ namespace KITWTF1
                 Password);
             var query = LoginDetailsTable.SendAndGetQuery(executeString);
             LoginDetailsTable[] queryArray = query.ToArray();
-            
+
             return isCorrectCredentials(queryArray);
         }
         public bool LoginEmail(string Email, string Password)
@@ -286,9 +290,9 @@ namespace KITWTF1
         public string Alias { get; set; }
         public int ContactID { get; set; }
         public int RemainingTime { get; set; }
-        public string PersonName { get; set;}
+        public string PersonName { get; set; }
 
-        public string lastCommunication { get; set ;}
+        public string lastCommunication { get; set; }
 
         public int lastContact { get; set; }
 
@@ -307,74 +311,50 @@ namespace KITWTF1
                 return query;
             }
         }
-        public int DayCounter(string dateOne,string dateTwo)
-       {
-            string[] newDone= dateOne.Split("-");
+        public int DayCounter(string dateOne, string dateTwo)
+        {
+            string[] newDone = dateOne.Split("-");
             string[] newDtwo = dateTwo.Split("-");
             int dateYearOne = Convert.ToInt32(newDone[0]);
             int dateYearTwo = Convert.ToInt32(newDtwo[0]);
             int dateDayOne = Convert.ToInt32(newDone[2]);
             int dateDayTwo = Convert.ToInt32(newDtwo[2]);
-            int dateMonthOne  = Convert.ToInt32(newDone[1]);
+            int dateMonthOne = Convert.ToInt32(newDone[1]);
             int dateMonthTwo = Convert.ToInt32(newDtwo[1]);
-            DateTime startDate = new DateTime(dateYearOne,dateMonthOne,dateDayOne);
-            DateTime endDate = new DateTime(dateYearTwo,dateMonthTwo,dateDayTwo);
+            DateTime startDate = new DateTime(dateYearOne, dateMonthOne, dateDayOne);
+            DateTime endDate = new DateTime(dateYearTwo, dateMonthTwo, dateDayTwo);
 
             TimeSpan daysBetween = endDate - startDate;
 
             return daysBetween.Days;
-    
-
         }
-         public int ContactRelative(string PersonID)
-        {              
-                    DateTime date = new DateTime();
-               try
-               { 
-                        
-                    string connectionString="server=40.85.84.155;Database=student29;User Id=student29;Password=YH-student@2019";
-                    using (SqlConnection connection = new SqlConnection(connectionString))
-                    {       
-                                   return  connection.Query<Person_PersonTable >($"Update person_person set lastCommunication = '{date}' where PersonID ='{PersonID}'").FirstOrDefault().ContactID;
-                                     
-                                  
-                                     
-                                            
-                    }
-               }
-               catch (System.Exception)
-               {             
-                   return 0;
-               }
-               return 0;
+        public int ContactRelative(string PersonID)
+        {
+            DateTime date = new DateTime();
+            try
+            {
+                string connectionString = "server=40.85.84.155;Database=student29;User Id=student29;Password=YH-student@2019";
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    return connection.Query<Person_PersonTable>($"Update person_person set lastCommunication = '{date}' where PersonID ='{PersonID}'").FirstOrDefault().ContactID;
+                }
+            }
+            catch (System.Exception)
+            {
+                return 0;
+            }
         }
         public override string ToString()
-       {
-            
+        {
             string date = DateTime.Now.ToString("yyyy-MM-dd");
-            if(DayCounter(lastCommunication.Substring(0,10),date)>8)
+            if (DayCounter(lastCommunication.Substring(0, 10), date) > 8)
             {
-                    return lastCommunication.Substring(0,10)
-
-                    ;
-
+                return lastCommunication.Substring(0, 10);
             }
-               
-
-           
-             else {   
-                    return lastCommunication.Substring(0,10);
-
-                    
-               
-             }
-             return "";
-           
-           
-           
-       }
-        
+            else
+            {
+                return lastCommunication.Substring(0, 10);
+            }
+        }
     }
-    
-    
 }

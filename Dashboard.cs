@@ -6,6 +6,7 @@ namespace KITWTF1
 {
     public class Dashboard
     {
+        //sätter värden på huvudmenyns rubriker och header
         string dashboardHeader = "Dashboard";
         string[] dashboardContent = new string[] { "Se kontakter", "Lägg till kontakt", "Logga ut" };
         public void dashboard(int userID)
@@ -14,6 +15,7 @@ namespace KITWTF1
             {
                 DatabaseHandler DBHandler = new DatabaseHandler();
 
+                //Skapar en ny instanns utav menu klassen, matar in värden och ritar menyn
                 var dashboardMenu = new Menu(dashboardContent);
                 dashboardMenu = dashboardMenu.GetMenu(dashboardMenu, dashboardHeader);
 
@@ -27,15 +29,14 @@ namespace KITWTF1
                     case 1:  // Lägg till kontakt
 
                         string menuHeader = "Lägg till kontakt";
-                        string[] menuContent = new string[] { "Lägg till befintlig användare", "Lägg till kontakt utan konto" , "Tillbaka"};
+                        string[] menuContent = new string[] { "Lägg till befintlig användare", "Lägg till kontakt utan konto", "Tillbaka" };
 
                         var addContactMenu = new Menu(menuContent);
                         addContactMenu = addContactMenu.GetMenu(addContactMenu, menuHeader);
 
                         switch (addContactMenu.SelectedIndex)
                         {
-                            case 0: 
-                            // Skapa relation med befintlig användare
+                            case 0: // Skapa relation med befintlig användare 
                                 while (true)
                                 {
                                     int userFriendID;
@@ -43,7 +44,7 @@ namespace KITWTF1
                                     string friendUsername = Console.ReadLine();
 
                                     userFriendID = DBHandler.GetIDExistingUser(friendUsername);
-                                    if (userFriendID != 0) 
+                                    if (userFriendID != 0)
                                     {
                                         Console.WriteLine("Skriv in ett namn på er relation:");
                                         string alias = Console.ReadLine();
@@ -70,7 +71,7 @@ namespace KITWTF1
                                     else
                                     {
                                         Console.WriteLine("Angivet användarnamn finnns ej registrerat.");
-                                        Console.WriteLine("Vill du gå tillbaka [J/n]");
+                                        Console.WriteLine("Vill du gå tillbaka [J/N]");
                                         var keyInfo = Console.ReadKey();
                                         if (keyInfo.Key == ConsoleKey.Enter || keyInfo.KeyChar.ToString().ToLower() == "j")
                                         {
@@ -78,10 +79,10 @@ namespace KITWTF1
                                         }
                                     }
                                 }
-                            break;
+                                break;
 
-                            case 1: 
-                            // Skapa relation med användare utan konto (icke användare)
+                            case 1:
+                                // Skapa relation med användare utan konto (icke användare)
                                 Console.Write("Skriv in personens namn: ");
                                 string Name = Console.ReadLine();
 
@@ -114,14 +115,14 @@ namespace KITWTF1
                                 Console.ReadKey();
                                 break;
 
-                                case 2:
+                            case 2:
 
                                 break;
 
                         }
                         break;
                     case 2:
-                    // Logga ut
+                        // Logga ut
                         return;
                 }
 
@@ -131,13 +132,13 @@ namespace KITWTF1
         {
             foreach (var relation in relations)
             {
-                
+
                 Console.WriteLine();
                 Console.WriteLine("--------------------------------------");
                 Console.WriteLine("Namn: " + relation.PersonName);
                 Console.WriteLine("AKA: " + relation.Alias);
                 Console.WriteLine("Tid kvar: " + relation.RemainingTime + " dagar");
-                Console.WriteLine("Senaste kontakt:"+ relation.lastCommunication.Substring(0,10));
+                Console.WriteLine("Senaste kontakt:" + relation.lastCommunication.Substring(0, 10));
                 Console.WriteLine("--------------------------------------");
             }
             Console.WriteLine("\nTryck valfri tangent för att gå vidare");
