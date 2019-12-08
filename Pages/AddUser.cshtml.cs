@@ -32,7 +32,9 @@ namespace KITWTF1.Pages
                    User user = new User();
                    
                    user.Email = email;
+                   
                    user.Username = Username;
+                   user.Name = user.Username;
                    user.Password = Userpassword;
                    user.Phonenumber = PhoneNumber;
 
@@ -41,6 +43,10 @@ namespace KITWTF1.Pages
 
                    dbt.AddUser(user);
                    return Redirect("/Index");
+
+                    
+
+
 
                }
                catch (System.Exception)
