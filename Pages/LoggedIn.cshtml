@@ -40,7 +40,7 @@
                         {   Model.ContactID = item.ContactID;
                         var buttonClass="primary";
                         
-                        @if( item.lastContact<= 3)
+                        @if( item.lastContact<= 2)
                         {
                                 buttonClass = "danger";
                                 
@@ -49,7 +49,7 @@
                         {
                                   buttonClass = "warning";
                         }
-                        else if( item.lastContact >=21)
+                        else if( item.lastContact >=14)
                         {
                                     buttonClass = "success";
                         }
