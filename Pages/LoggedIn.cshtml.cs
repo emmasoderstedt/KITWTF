@@ -72,8 +72,8 @@ namespace KITWTF1.Pages
                string date = DateTime.Now.ToString("yyyy-MM-dd");
                try
                {     
-                    DatabaseHandler dbhandler = new DatabaseHandler();
-                    Person_PersonTable ppt = new Person_PersonTable();
+                     DatabaseHandler dbhandler = new DatabaseHandler();
+                     Person_PersonTable ppt = new Person_PersonTable();
                      ppt.lastCommunication= date;
                      ppt.ContactID = ContactID;
                      Console.WriteLine(ContactID+ "Tryin to update date with "+date);

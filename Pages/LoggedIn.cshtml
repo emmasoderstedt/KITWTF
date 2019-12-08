@@ -38,11 +38,29 @@
                     <td>
                         @if(item.RemainingTime<=item.lastContact)
                         {   Model.ContactID = item.ContactID;
+                        var buttonClass="primary";
+                        
+                        @if( item.lastContact<= 3)
+                        {
+                                buttonClass = "danger";
+                                
+                        }
+                        else if( item.lastContact <=7)
+                        {
+                                  buttonClass = "warning";
+                        }
+                        else if( item.lastContact >=21)
+                        {
+                                    buttonClass = "success";
+                        }
+
+
                         <form asp-action = "LoggedIn">
             
-                    <div class="form-group">             
-                            <input  asp-for="ContactID" type="submit" class="btn btn-primary form-control">              
-                    </div>
+                                <div class="form-group">             
+                                        <input  asp-for="ContactID" class="d-none"> 
+                                        <button type="submit" class="btn btn-@(buttonClass) form-control">Kontakta </button>     
+                                </div>
                         </form>
                         }
                     </td>
